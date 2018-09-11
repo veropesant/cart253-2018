@@ -1,127 +1,78 @@
-/*****************
+// Exercise 1 - Moving pictures
+// Pippin Barr
+//
+// Starter code for exercise 1.
+// It moves two pictures around on the canvas.
+// One moves linearly down the screen.
+// One moves toward the mouse cursor.
 
-Exercice 1
-Veronique Pesant
 
-This is a template. You must fill in the title,
-author, and this description to match your project!
+// The image of a clown face
+var clownImage;
+// The current position of the clown face
+var clownImageX;
+var clownImageY;
 
-******************/
+// The transparent image of "felt" that wipes down the canvas
+var feltTextureImage;
+// The current position of the transparent image of "felt"
+var feltTextureImageX;
+var feltTextureImageY;
+
+
+// preload()
+//
+// Load the two images we're using before the program starts
+
+function preload() {
+  clownImage = loadImage("assets/images/clown.png");
+  feltTextureImage = loadImage("assets/images/black-felt-texture.png");
+}
+
 
 // setup()
 //
-// Description of setup
-//Only runs once, then stops.
+// Set up the canvas, position the images, set the image mode.
 
 function setup() {
-  console.log('start');
-  createCanvas(500, 500);
-  noFill();
-  background("#05002E");
-  fill('#1522BF');
-  ellipseMode(CENTER);
-  noStroke();
-  ellipse(250, 250, 400, 400);
-  fill('#3045C7');
-  ellipse(250, 250, 300, 300);
+  // Create our canvas
+  createCanvas(640,640);
 
-  noFill();
-  stroke(226);
-  strokeWeight(6);
-  line(200, 150, 250, 220);
-  // line(230, 200, 250, 160);
-  line(250, 150, 250, 220);
-  line(250, 150, 280, 150);
-  line(250, 200, 280, 200);
-  arc(280, 175, 50, 50, HALF_PI+PI, HALF_PI);
+  // Start the clown image at the centre of the canvas
+  clownImageX = width/2;
+  clownImageY = height/2;
 
-  noStroke();
+  // Start the felt image perfectly off screen above the canvas
+  feltTextureImageX = width/2;
+  feltTextureImageY = 0 - feltTextureImage.height/2;
 
-  //Cheveux back
-  fill('#BD8A1D');
-  quad(180, 300, 320, 300, 320, 450, 180, 450);
-  arc(250, 450, 140, 20, TWO_PI, PI);
-  fill('#E8AE7B');
-  ellipse(198, 330, 20, 20);
-  stroke('gray');
-  strokeWeight(4);
-  line(190, 320, 195, 325);
-  noStroke();
-  fill('#22590A')
-  ellipse(195, 335, 4, 4);
-  fill('#694C10');
-  quad(200, 350, 300, 350, 300, 408, 200, 408);
-  //Face
-  fill('#E8AE7B');
-  quad(200, 300, 200, 350, 300, 350, 300, 300);
-  ellipse(250, 350, 100, 70);
-  fill('#E89D7F');
-  ellipse(215, 340, 20, 20);
-  ellipse(285, 340, 20, 20);
-  fill('#2D2E02');
-  ellipse(275, 320, 10, 10);
-  ellipse(225, 320, 10, 10);
-  stroke('#2D2E02');
-  strokeWeight(1);
-  line(275, 320, 285, 315);
-  line(275, 320, 285, 320);
-  line(225, 320, 215, 315);
-  line(225, 320, 215, 320);
-//Cou
-  fill('#E8AE7B');
-  noStroke();
-  quad(240, 380, 260, 380, 260, 395, 240, 395);
-  fill('#FF7349');
-  arc(250, 410, 110, 30, PI, TWO_PI);
-//Chandail
-  quad(195, 410, 305, 410, 305, 500, 195, 500);
-//Col
-  quad(240, 390, 260, 390, 260, 400, 240, 400);
-  arc(240, 395, 10, 10, HALF_PI, HALF_PI+PI);
-  arc(260, 395, 10, 10, HALF_PI+PI, HALF_PI);
-//Chat
-  fill('#C74F32');
-  quad(230, 430, 270, 430, 270, 440, 230, 440);
-  arc(250, 440, 40, 10, TWO_PI, PI);
-  arc(250, 430, 40, 10, PI, TWO_PI);
-  triangle(230, 430, 235, 420, 242, 430);
-  triangle(260, 430, 265, 420, 270, 430);
-  stroke('#C74F32');
-  line(270, 432, 275, 430);
-  line(270, 434, 275, 434);
-  line(270, 436, 275, 438);
-
-  line(230, 432, 225, 430);
-  line(230, 434, 225, 434);
-  line(230, 436, 225, 438);
-  fill('#FF7349');
-  ellipse(240, 435, 4, 4);
-  ellipse(260, 435, 4, 4);
-
-//Bouche
-  fill('#FF7465');
-  noStroke();
-  arc(245, 365, 10, 10, PI, TWO_PI);
-  arc(255, 365, 10, 10, PI, TWO_PI);
-  fill('#FF8B7C');
-  arc(250, 365, 20, 20, TWO_PI, PI);
-//Cheveux
-  fill('#BD8A1D');
-  arc(250, 300, 140, 90, PI, TWO_PI);
-  //toupet gauche
-  arc(235, 300, 70, 20, TWO_PI, PI);
-  //toupet droit
-  arc(295, 300, 50, 15, TWO_PI, PI);
-
-
+  // We'll use imageMode CENTER for this script
+  imageMode(CENTER);
 }
 
 
 // draw()
 //
-// Description of draw()
-//Runs over and over again.
+// Moves the felt image linearly
+// Moves the clown face toward the current mouse location
 
 function draw() {
 
+  // Move the felt image down by increasing its y position
+  feltTextureImageY += 1;
+
+  // Display the felt image
+  image(feltTextureImage,feltTextureImageX,feltTextureImageY);
+
+  // Move the clown by moving it 1/10th of its current distance from the mouse
+
+  // Calculate the distance in X and in Y
+  var xDistance = mouseX - clownImageX;
+  var yDistance = mouseY - clownImageY;
+  // Add 1/10th of the x and y distance to the clown's current (x,y) location
+  clownImageX = clownImageX + xDistance/10;
+  clownImageY = clownImageY + yDistance/10;
+
+  // Display the clown image
+  image(clownImage,clownImageX,clownImageY);
 }
