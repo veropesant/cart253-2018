@@ -24,7 +24,7 @@ var feltTextureImage;
 var feltTextureImageX;
 var feltTextureImageY;
 
-// The jumping yoshu image tht goes across the canvas
+// The jumping yoshi image tht goes across the canvas
 var yoshiImage;
 // The current position of the yoshi image
 var yoshiImageX;
@@ -80,6 +80,11 @@ function draw() {
 
   // Move the felt image down by increasing its y position
   feltTextureImageY += 1;
+
+  //Brings the yoshi image back to the beginning of the canvas
+  //and increase its Y position by 100
+  //if its position in X is bigger than the width of the canvas.
+  //Otherwise it increases its X position by one pixel.
   if(yoshiImageX>640+yoshiImage.width){
     console.log(yoshiImageY);
     yoshiImageX=0-yoshiImage.width;
@@ -90,26 +95,26 @@ function draw() {
   }
 
 
-  // Display the felt image and the Yoshi image
+  // Display the grass image and the Yoshi image
   image(feltTextureImage,feltTextureImageX,feltTextureImageY);
   image(yoshiImage,yoshiImageX,yoshiImageY);
 
   // Move the cappy by moving it 1/10th of its current distance from the mouse
 
-  // Calculate the distance in X and in Y
+  // Calculate the distance in X and in Y for the cappy and the mario images
   var xDistanceCappy = mouseX - cappyImageX;
   var yDistanceCappy = mouseY - cappyImageY;
   var xDistanceMario = mouseX - marioImageX;
   var yDistanceMario = mouseY - marioImageY;
-  // Add 1/10th of the x and y distance to the cappy's current (x,y) location
+  // Add 1/40th of the x and y distance to mario's current (x,y) location
   marioImageX = marioImageX + xDistanceMario/40;
   marioImageY = marioImageY + yDistanceMario/40;
-  // Add 1/10th of the x and y distance to the cappy's current (x,y) location
+  // Add 1/10th of the x and y distance to cappy's current (x,y) location
   cappyImageX = cappyImageX + xDistanceCappy/10;
   cappyImageY = cappyImageY + yDistanceCappy/10;
 
 
-  // Display the cappy image
+  // Display the cappy and the mario images
   image(marioImage,marioImageX,marioImageY);
   image(cappyImage,cappyImageX,cappyImageY);
 
