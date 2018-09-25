@@ -8,6 +8,7 @@ Starter code for exercise 2.
 *********************************************************/
 //Compteur
 var cpt=0;
+var result;
 
 //disabled state
 var disabled = false;
@@ -93,14 +94,16 @@ function draw() {
   background(bgImage);
   textFont('Audiowide');
   textSize(24);
+  textAlign(CENTER);
   fill(255, 255, 255);
   //Text to indicate number of DODGES
   if(dodges<=1){
-    text(dodges + ' DODGE', 300, 30);
+    text(dodges + ' DODGE', 400, 30);
   }else{
-    text(dodges + ' DODGES', 300, 30);
+    text(dodges + ' DODGES', 400, 30);
   }
-  text('LIFE: '+ life , 30, 30);
+  text('LIFE: '+ life , 80, 30);
+  text(result, 250, 250);
 
 
   // Default the avatar's velocity to 0 in case no key is pressed this frame
@@ -152,8 +155,8 @@ function draw() {
       dodgeDisabled = true;
       // Reset the enemy's position
       if(life < 1){
-        text("YOU LOSE!", width/2, height/2);
-        reset();
+        result = "negative";
+        stop(result);
       }
     }
   }
@@ -164,9 +167,9 @@ function draw() {
   // Check if the avatar has gone off the screen (cheating!)
   if (avatarX < 0 || avatarX > width || avatarY < 0 || avatarY > height) {
     // If they went off the screen they lose in the same way as above.
-    text("YOU LOSE!", 20, 20);
 
-    reset();
+    result = "negative";
+    stop(result);
 
   }
 
@@ -207,8 +210,8 @@ function draw() {
     starX=0-starSize;
     starSpeed=0;
     if(dodges>=20){
-      text('YOU WIN!', width/2, height/2);
-      reset();
+      result="positive";
+      stop(result);
     }
   }
 
@@ -235,6 +238,31 @@ function draw() {
   image(starImage, starX, starY, starSize, starSize);
 }
 
+function stop(state){
+  enemyX = 0;
+  enemyY = random(0,height);
+  enemySize = 1;
+  enemySpeed = 0;
+
+  avatarX = 0;
+  avatarY = 0;
+  avatarSpeed = 0;
+  avatarSize= 1;
+  dodges = 0;
+  life=0;
+  if(state=="positive"){
+    result = "YOU WIN! \n Press enter to play again";
+  }else{
+    result = "YOU LOSE! \n Press enter to play again";
+  }
+
+
+}
+function keyPressed(){
+  if(keyCode == ENTER){
+    reset();
+  }
+}
 function reset(){
 
   enemyX = 0;
@@ -244,8 +272,10 @@ function reset(){
 
   avatarX = width/2;
   avatarY = height/2;
+  avatarSpeed = random(10, 20);
   avatarSize= random(100, 150);
   dodges = 0;
   life=3;
+  result = "";
 
 }
