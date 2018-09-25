@@ -28,8 +28,8 @@ var avatarSize = 50;
 
 // The speed and velocity of our avatar circle
 var avatarSpeed = 10;
-var avatarVX = 2;
-var avatarVY = 2;
+var avatarVX = 0;
+var avatarVY = 0;
 
 // The position and size of the enemy meteor
 var enemyX;
