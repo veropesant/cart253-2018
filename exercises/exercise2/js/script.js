@@ -238,6 +238,9 @@ function draw() {
   image(starImage, starX, starY, starSize, starSize);
 }
 
+
+//Stop everything on the canvas
+//and waits for the ENTER button to be pressed to call the reset function
 function stop(state){
   enemyX = 0;
   enemyY = random(0,height);
@@ -258,11 +261,14 @@ function stop(state){
 
 
 }
+//Calls the reset function when ENTER is pressed
 function keyPressed(){
   if(keyCode == ENTER){
     reset();
   }
 }
+
+//Resets the game
 function reset(){
 
   enemyX = 0;
