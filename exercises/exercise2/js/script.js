@@ -206,6 +206,10 @@ function draw() {
   else{
     starX=0-starSize;
     starSpeed=0;
+    if(dodges>=20){
+      text('YOU WIN!', width/2, height/2);
+      reset();
+    }
   }
 
   if (dist(starX,starY,avatarX,avatarY) < starSize/2 + avatarSize/2){
