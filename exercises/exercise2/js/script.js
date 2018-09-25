@@ -153,18 +153,7 @@ function draw() {
       // Reset the enemy's position
       if(life < 1){
         text("YOU LOSE!", width/2, height/2);
-        enemyX = 0;
-        enemyY = random(0,height);
-        // Reset the enemy's size and speed
-        enemySize = 50;
-        enemySpeed = 5;
-        // Reset the avatar's position
-        avatarX = width/2;
-        avatarY = height/2;
-        avatarSize= random(100, 150);
-        // Reset the dodge counter
-        dodges = 0;
-        life = 3;
+        reset();
       }
     }
   }
@@ -177,15 +166,7 @@ function draw() {
     // If they went off the screen they lose in the same way as above.
     text("YOU LOSE!", 20, 20);
 
-    enemyX = 0;
-    enemyY = random(0,height);
-    enemySize = 50;
-    enemySpeed = 5;
-
-    avatarX = width/2;
-    avatarY = height/2;
-    dodges = 0;
-    life=3;
+    reset();
 
   }
 
@@ -248,4 +229,19 @@ function draw() {
 
   // Draw the bonus star
   image(starImage, starX, starY, starSize, starSize);
+}
+
+function reset(){
+
+  enemyX = 0;
+  enemyY = random(0,height);
+  enemySize = 50;
+  enemySpeed = 5;
+
+  avatarX = width/2;
+  avatarY = height/2;
+  avatarSize= random(100, 150);
+  dodges = 0;
+  life=3;
+
 }
