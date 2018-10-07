@@ -206,10 +206,10 @@ function movePrey() {
   // Change the prey's velocity at random intervals
   // random() will be < 0.05 5% of the time, so the prey
   // will change direction on 5% of frames
-  preyY = height*noise(ty);
-  preyX = width*noise(tx);
-  ty+=0.01;
-  tx+=0.01;
+  preyVX = map(noise(tx), 0, 1, -preyMaxSpeed, preyMaxSpeed);
+  preyVY = map(noise(ty), 0, 1, -preyMaxSpeed, preyMaxSpeed);
+  preyX += preyVX;
+  preyY += preyVY;
 
   // Screen wrapping
   if (preyX < 0) {
@@ -225,6 +225,8 @@ function movePrey() {
   else if (preyY > height) {
     preyY -= height;
   }
+  ty+=0.01;
+  tx+=0.01;
 }
 
 // drawPrey()
