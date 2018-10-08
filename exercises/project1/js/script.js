@@ -125,7 +125,7 @@ function handleInput() {
 
   if(keyIsDown(SHIFT)){
     playerMaxSpeed+=0.01;
-    playerHealthLoss=1;
+    playerHealthLoss=1 ;
   }else{
     playerMaxSpeed=2;
     playerHealthLoss=0.5;
@@ -267,4 +267,25 @@ function showGameOver() {
   gameOverText += "You ate " + preyEaten + " prey\n";
   gameOverText += "before you died."
   text(gameOverText,width/2,height/2);
+}
+
+//Enter button restarts the game only if it's over
+function keyPressed(){
+  if(keyCode==ENTER){
+    if(gameOver==true){
+      restartGame();
+    }
+  }
+
+}
+
+function restartGame(){
+  console.log('Restart');
+  gameOver=false;
+  preyEaten=0;
+  playerHealth=playerMaxHealth;
+  preyHealth=preyMaxHealth;
+  setupPrey();
+  setupPlayer();
+
 }
