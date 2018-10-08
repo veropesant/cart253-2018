@@ -23,6 +23,7 @@ var playerMaxSpeed = 2;
 // Player health
 var playerHealth;
 var playerMaxHealth = 255;
+var playerHealthLoss=0.5;
 // Player fill color
 var playerFill = 50;
 
@@ -122,6 +123,14 @@ function handleInput() {
     playerVX = 0;
   }
 
+  if(keyIsDown(SHIFT)){
+    playerMaxSpeed+=0.01;
+    playerHealthLoss=1;
+  }else{
+    playerMaxSpeed=2;
+    playerHealthLoss=0.5;
+  }
+
   // Check for vertical movement
   if (keyIsDown(UP_ARROW)) {
     playerVY = -playerMaxSpeed;
@@ -132,6 +141,8 @@ function handleInput() {
   else {
     playerVY = 0;
   }
+
+  //Sprint in the direction pressed, for as long as the key id pressed
 }
 
 // movePlayer()
@@ -165,7 +176,7 @@ function movePlayer() {
 // Check if the player is dead
 function updateHealth() {
   // Reduce player health, constrain to reasonable range
-  playerHealth = constrain(playerHealth - 0.5,0,playerMaxHealth);
+  playerHealth = constrain(playerHealth - playerHealthLoss,0,playerMaxHealth);
   // Check if the player is dead
   if (playerHealth === 0) {
     // If so, the game is over
