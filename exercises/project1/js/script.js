@@ -47,6 +47,12 @@ var eatHealth = 10;
 // Number of prey eaten during the game
 var preyEaten = 0;
 
+//Text variables
+var smallText = 12;
+var mediumText = 24;
+var bigText = 36;
+var base = 'Arial';
+
 // setup()
 //
 // Sets up the basic elements of the game
@@ -59,6 +65,8 @@ function setup() {
 
   setupPrey();
   setupPlayer();
+  setupText();
+
 }
 
 // setupPrey()
@@ -79,6 +87,10 @@ function setupPlayer() {
   playerX = 4*width/5;
   playerY = height/2;
   playerHealth = playerMaxHealth;
+}
+function setupText(){
+  textSize(smallText);
+  textFont(base);
 }
 
 // draw()
@@ -102,6 +114,7 @@ function draw() {
 
     drawPrey();
     drawPlayer();
+    drawInfoText();
   }
   else {
     showGameOver();
@@ -124,8 +137,8 @@ function handleInput() {
   }
 
   if(keyIsDown(SHIFT)){
-    playerMaxSpeed+=0.01;
-    playerHealthLoss=1 ;
+    playerMaxSpeed=5;
+    playerHealthLoss=2;
   }else{
     playerMaxSpeed=2;
     playerHealthLoss=0.5;
@@ -208,6 +221,9 @@ function checkEating() {
       preyEaten++;
     }
   }
+  if(preyEaten>=5){
+    drawBoost();
+  }
 }
 
 // movePrey()
@@ -240,10 +256,17 @@ function movePrey() {
   tx+=0.01;
 }
 
+//Draws the text that displays the game's info such as number of prey eaten
+function drawInfoText(){
+  fill(0);
+  textAlign(LEFT);
+  text('Prey eaten: '+preyEaten, 30, 30);
+}
 // drawPrey()
 //
 // Draw the prey as an ellipse with alpha based on health
 function drawPrey() {
+  noStroke();
   fill(preyFill,preyHealth);
   ellipse(preyX,preyY,preyRadius*2);
 }
@@ -252,9 +275,13 @@ function drawPrey() {
 //
 // Draw the player as an ellipse with alpha based on health
 function drawPlayer() {
+  noStroke();
   fill(playerFill,playerHealth);
   ellipse(playerX,playerY,playerRadius*2);
 }
+
+
+
 
 // showGameOver()
 //
@@ -265,7 +292,8 @@ function showGameOver() {
   fill(0);
   var gameOverText = "GAME OVER\n";
   gameOverText += "You ate " + preyEaten + " prey\n";
-  gameOverText += "before you died."
+  gameOverText += "before you died.\n";
+  gameOverText += "Press ENTER to play again.";
   text(gameOverText,width/2,height/2);
 }
 
@@ -287,5 +315,6 @@ function restartGame(){
   preyHealth=preyMaxHealth;
   setupPrey();
   setupPlayer();
+  setupText();
 
 }
