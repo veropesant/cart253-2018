@@ -13,6 +13,9 @@ sprinting, random movement, screen wrap.
 // Track whether the game is over
 var gameOver = false;
 
+//sound variables
+var pewSound;
+var backgroundMusic;
 // Player position, size, velocity
 var playerX;
 var playerY;
@@ -77,6 +80,7 @@ var obstacleSpeed;
 var obstacleMaxSpeed= 2;
 var obstacleWidth;
 var obstacleHeight;
+var obstacleFill= 'red';
 var obstacleActivated=true;
 
 // Amount of health obtained per frame of "eating" the prey
@@ -90,11 +94,20 @@ var mediumText = 24;
 var bigText = 36;
 var base = 'Arial';
 
+//preload all images
+function preload(){
+  bgImage = loadImage("assets/images/space-bg.jpg");
+  starImage = loadImage("assets/images/etoile.png");
+  pewSound = new Audio('assets/sounds/pew.mp3');
+  backgroundMusic = new Audio('assets/sounds/Dark-Techno-City.mp3');
+}
 // setup()
 //
 // Sets up the basic elements of the game
 function setup() {
   createCanvas(500,500);
+  backgroundMusic.play();
+  backgroundMusic.loop=true;
   txPrey = random(0,1000);
   tyPrey = random(0,1000);
   txBoost = random(0,1000);
@@ -153,11 +166,11 @@ function setupPlayer() {
 }
 function setupText(){
   textSize(smallText);
-  textFont(base);
+  textFont('Orbitron');
 }
 function setupObstacle(){
-  obstacleX = 0;
-  obstacleY = 0;
+  obstacleX = -5;
+  obstacleY = -5;
   obstacleVX = obstacleMaxSpeed;
   obstacleVY = 0;
   obstacleWidth = 5;
@@ -172,7 +185,7 @@ function setupObstacle(){
 // displays the two agents.
 // When the game is over, shows the game over screen.
 function draw() {
-  background(100,100,200);
+  background(bgImage);
 
   if (!gameOver) {
     handleInput();
@@ -246,6 +259,7 @@ function keyPressed(){
     projectileX = playerX;
     projectileY = playerY;
     projectileIsAlive=true;
+    pewSound.play();
     if(keyIsDown(LEFT_ARROW)){
 
       projectileVX = -projectileMaxSpeed;
@@ -386,8 +400,6 @@ function checkContactPlayerObstacle(){
   if(obstacleVX!=0){
     if(playerX-obstacleX < 1){
       if(obstacleActivated == true){
-        console.log('obstacleActivated '+ obstacleActivated);
-        console.log('OUCH');
         playerHealth=0;
         obstacleActivated = false;
       }
@@ -396,7 +408,6 @@ function checkContactPlayerObstacle(){
   if(obstacleVY!=0){
     if(playerY-obstacleY < 1){
       if(obstacleActivated == true){
-        console.log('OUCH');
         playerHealth=0;
         obstacleActivated = false;
       }
@@ -413,15 +424,14 @@ function checkContactProjectileObstacle(){
   if(projectileIsAlive==true){
     if(obstacleVX!=0){
       if(projectileX-obstacleX<1){
-        console.log('Projectile'+projectileX);
-        console.log('PEW');
-        console.log('obstacleActivated '+ obstacleActivated);
         obstacleActivated=false;
+        obstacleFill = 255;
       }
     }
     if(obstacleVY!=0){
       if(projectileY-obstacleY < 1){
         obstacleActivated = false;
+        obstacleFill = 255;
       }
     }
   }
@@ -460,7 +470,7 @@ function movePrey() {
 function moveProjectile(){
   projectileX+=projectileVX;
   projectileY+=projectileVY;
-  console.log(projectileX);
+
 }
 
 function moveObstacle(){
@@ -476,6 +486,7 @@ function moveObstacle(){
       obstacleWidth = width;
       obstacleHeight = 5;
       obstacleVY = obstacleMaxSpeed;
+      obstacleFill='red';
     }, 5000)
 
   }
@@ -489,22 +500,26 @@ function moveObstacle(){
       obstacleHeight = height;
       obstacleWidth = 5;
       obstacleVX = obstacleMaxSpeed;
+      obstacleFill='red';
+
+
     }, 5000)
   }
 }
 
 //Draws the text that displays the game's info such as number of prey eaten
 function drawInfoText(){
-  fill(0);
+  fill(255);
   textAlign(LEFT);
   text('Prey eaten: '+preyEaten, 30, 30);
+  text('Health: '+playerHealth, width-100, 30);
 }
 // drawPrey()
 //
 // Draw the prey as an ellipse with alpha based on health
 function drawPrey() {
   noStroke();
-  fill(preyFill,preyHealth);
+  fill(93, 232, 106, preyHealth);
   ellipse(preyX,preyY,preyRadius*2);
 }
 
@@ -513,7 +528,7 @@ function drawPrey() {
 // Draw the player as an ellipse with alpha based on health
 function drawPlayer() {
   noStroke();
-  fill(playerFill,playerHealth);
+  fill(66, 184, 255,playerHealth);
   ellipse(playerX,playerY,playerRadius*2);
 }
 
@@ -521,14 +536,14 @@ function drawBoost(){
   if(boostHealth>0){
     moveBoost();
     checkBoost();
-    ellipse(boostX, boostY, boostRadius*2);
+    image(starImage,boostX, boostY, 20, 20);
   }
 
 }
 //Draws a projectile when the player presses the space bar
 function drawProjectile(){
   moveProjectile();
-  fill(0);
+  fill(255, 229, 132);
   ellipse(projectileX, projectileY, projectileRadius*2);
 }
 
@@ -536,7 +551,7 @@ function drawProjectile(){
 function drawObstacle(){
   moveObstacle();
   rectMode(CORNER);
-  fill(0);
+  fill(obstacleFill);
   rect(obstacleX, obstacleY, obstacleWidth, obstacleHeight);
 }
 
@@ -547,9 +562,10 @@ function drawObstacle(){
 //
 // Display text about the game being over!
 function showGameOver() {
+  textFont('Orbitron');
   textSize(32);
   textAlign(CENTER,CENTER);
-  fill(0);
+  fill(255);
   var gameOverText = "GAME OVER\n";
   gameOverText += "You ate " + preyEaten + " prey\n";
   gameOverText += "before you died.\n";
@@ -558,7 +574,6 @@ function showGameOver() {
 }
 
 function restartGame(){
-  console.log('Restart');
   gameOver=false;
   preyEaten=0;
   playerHealth=playerMaxHealth;
@@ -567,7 +582,9 @@ function restartGame(){
   obstacleVX = 0;
   obstacleVY = 0;
   obstacleActivated=true;
+  obstacleFill='red';
   projectileIsAlive=false;
+  backgroundMusic.currentTime=0;
 
   setupPrey();
   setupPlayer();
