@@ -66,7 +66,7 @@ var projectileMaxSpeed = 4;
 var projectileFill = 0;
 var projectileNb = 3;
 var projectileRadius = 5;
-var projectileIsAlive;
+var projectileIsAlive=false;
 
 //Obstacle variables
 var obstacleX;
@@ -137,11 +137,10 @@ function setupBoost(){
 //
 //Initialises projectile VX,  position, etc. for when I need to display it
 function setupProjectile(){
-  projectileX = 0;
-  projectileY = 0;
-  projectileVX = -projectileMaxSpeed;
-  projectileVY = projectileMaxSpeed;
-  projectileIsAlive = true;
+  projectileX = -5;
+  projectileY = -5;
+  projectileVX = 0;
+  projectileVY = 0;
 }
 
 // setupPlayer()
@@ -189,7 +188,6 @@ function draw() {
     drawPrey();
     drawPlayer();
     drawProjectile();
-    drawObstacle();
     drawInfoText();
   }
   else {
@@ -363,7 +361,7 @@ function checkEating() {
       preyEaten++;
     }
   }
-  if(preyEaten>=5){
+  if(preyEaten>=2){
     drawBoost();
     drawObstacle();
   }
@@ -384,18 +382,22 @@ function checkBoost(){
 //
 //Checks if the player touches the bar, then loses health
 function checkContactPlayerObstacle(){
-  var dPlayerObs = dist(playerX, playerY, obstacleX, obstacleY);
+
   if(obstacleVX!=0){
-    if(playerX-obstacleX<1){
-      if(obstacleActivated = true){
+    if(playerX-obstacleX < 1){
+      if(obstacleActivated == true){
+        console.log('obstacleActivated '+ obstacleActivated);
         console.log('OUCH');
+        playerHealth=0;
         obstacleActivated = false;
       }
     }
-  }else{
-    if(playerY-obstacleY<1){
-      if(obstacleActivated = true){
+  }
+  if(obstacleVY!=0){
+    if(playerY-obstacleY < 1){
+      if(obstacleActivated == true){
         console.log('OUCH');
+        playerHealth=0;
         obstacleActivated = false;
       }
     }
@@ -408,7 +410,21 @@ function checkContactPlayerObstacle(){
 //If the projectile hits the bar, the bar is
 //deactivated until it reaches the end of the canvas
 function checkContactProjectileObstacle(){
-
+  if(projectileIsAlive==true){
+    if(obstacleVX!=0){
+      if(projectileX-obstacleX<1){
+        console.log('Projectile'+projectileX);
+        console.log('PEW');
+        console.log('obstacleActivated '+ obstacleActivated);
+        obstacleActivated=false;
+      }
+    }
+    if(obstacleVY!=0){
+      if(projectileY-obstacleY < 1){
+        obstacleActivated = false;
+      }
+    }
+  }
 }
 
 // movePrey()
@@ -444,30 +460,34 @@ function movePrey() {
 function moveProjectile(){
   projectileX+=projectileVX;
   projectileY+=projectileVY;
+  console.log(projectileX);
 }
 
 function moveObstacle(){
   obstacleX+=obstacleVX;
   obstacleY+=obstacleVY;
   if(obstacleX>width){
+    obstacleX= -5;
     obstacleVX=0;
-    obstacleActivated = true;
-    obstacleWidth = width;
-    obstacleHeight = 5;
-    obstacleX=0;
-    obstacleY=0-obstacleHeight;
+    obstacleY= 0;
     setTimeout(function(){
+      obstacleX= 0;
+      obstacleActivated = true;
+      obstacleWidth = width;
+      obstacleHeight = 5;
       obstacleVY = obstacleMaxSpeed;
     }, 5000)
 
-  }else if (obstacleY > height) {
+  }
+  if(obstacleY > height) {
     obstacleVY=0;
-    obstacleActivated = true;
-    obstacleHeight = height;
-    obstacleWidth = 5;
-    obstacleX=0-obstacleWidth;
-    obstacleY=0;
+    obstacleX = 0;
+    obstacleY = -5;
     setTimeout(function(){
+      obstacleY = 0;
+      obstacleActivated = true;
+      obstacleHeight = height;
+      obstacleWidth = 5;
       obstacleVX = obstacleMaxSpeed;
     }, 5000)
   }
@@ -514,7 +534,8 @@ function drawProjectile(){
 
 //Draws an obstacle that crosses the canvas
 function drawObstacle(){
-  setTimeout(function(){moveObstacle()}, 5000);
+  moveObstacle();
+  rectMode(CORNER);
   fill(0);
   rect(obstacleX, obstacleY, obstacleWidth, obstacleHeight);
 }
@@ -543,11 +564,15 @@ function restartGame(){
   playerHealth=playerMaxHealth;
   preyHealth=preyMaxHealth;
   boostHealth=boostMaxHealth;
+  obstacleVX = 0;
+  obstacleVY = 0;
+  obstacleActivated=true;
+  projectileIsAlive=false;
+
   setupPrey();
   setupPlayer();
   setupText();
   setupBoost();
   setupProjectile();
   setupObstacle();
-
 }
