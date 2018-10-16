@@ -267,18 +267,16 @@ function handleBallOffScreen() {
     // This is where we would count points etc!
     /////NEW/////
     if(ballLeft > width){
-      rightPaddle.points++;
-      console.log(rightPaddle.points);
-    }
-    else if (ballRight < 0) {
       leftPaddle.points++;
       console.log(leftPaddle.points);
+    }
+    else if (ballRight < 0) {
+      rightPaddle.points++;
+      console.log(rightPaddle.points);
 
     }
+    reset();
 
-    if(leftPaddle.points>rightPaddle.points){
-      leftPaddle.fill(137);
-    }
   }
 }
 
@@ -286,6 +284,7 @@ function handleBallOffScreen() {
 //
 // Draws ball on screen based on its properties
 function displayBall() {
+  fill(255);
   rect(ball.x,ball.y,ball.size,ball.size);
 }
 
@@ -293,8 +292,19 @@ function displayBall() {
 //
 // Draws the specified paddle on screen based on its properties
 function displayPaddle(paddle) {
-  push();
   fill(paddle.fill);
-  pop();
   rect(paddle.x,paddle.y,paddle.w,paddle.h);
+}
+
+function reset(){
+  if(leftPaddle.points>rightPaddle.points){
+    leftPaddle.fill='green';
+    rightPaddle.fill=255;
+  }
+  else if (rightPaddle.points>leftPaddle.points) {
+    console.log('allo');
+    rightPaddle.fill='green';
+    leftPaddle.fill=255;
+
+  }
 }
