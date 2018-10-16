@@ -8,6 +8,19 @@
 var bgColor = 0;
 var fgColor = 255;
 
+///NEW///
+//Game images
+var flameRight;
+var flameLeft;
+var rightHand;
+var leftHand;
+var firePotato;
+
+var leftFlamesX;
+var leftFlamesY;
+var rightFlamesX;
+var rightFlamesY;
+
 // BALL
 
 // Basic definition of a ball object with its key properties of
@@ -15,10 +28,10 @@ var fgColor = 255;
 var ball = {
   x: 0,
   y: 0,
-  size: 20,
+  size: 40,
   vx: 0,
   vy: 0,
-  speed: 5
+  speed: 3
 }
 
 // PADDLES
@@ -41,7 +54,8 @@ var leftPaddle = {
   upKeyCode: 87, // The key code for W
   downKeyCode: 83, // The key code for S
   points:0,
-  fill:255
+  fill:255,
+  image:''
 }
 
 // RIGHT PADDLE
@@ -59,7 +73,8 @@ var rightPaddle = {
   upKeyCode: 38, // The key code for the UP ARROW
   downKeyCode: 40, // The key code for the DOWN ARROW
   points:0,
-  fill:255
+  fill:255,
+  image:''
 }
 
 // A variable to hold the beep sound we will play on bouncing
@@ -70,6 +85,11 @@ var beepSFX;
 // Loads the beep audio for the sound of bouncing
 function preload() {
   beepSFX = new Audio("assets/sounds/beep.wav");
+  flameRight = loadImage('assets/images/flame-right.png');
+  flameLeft = loadImage('assets/images/flame-left.png');
+  firePotato = loadImage('assets/images/fire-potato.png');
+  rightPaddle.image = loadImage('assets/images/right-hand.png');
+  leftPaddle.image = loadImage('assets/images/left-hand.png');
 }
 
 // setup()
@@ -83,6 +103,11 @@ function setup() {
   rectMode(CENTER);
   noStroke();
   fill(fgColor);
+
+  leftFlamesX=-40;
+  leftFlamesY=0;
+  rightFlamesX=width;
+  rightFlamesY=0;
 
   setupPaddles();
   setupBall();
@@ -143,6 +168,11 @@ function draw() {
   displayPaddle(leftPaddle);
   displayPaddle(rightPaddle);
   displayBall();
+
+  /////NEW//////
+  displayLeftFlames();
+  displayRightFlames();
+  /////END NEW//////
 }
 
 
@@ -269,13 +299,16 @@ function handleBallOffScreen() {
     if(ballLeft > width){
       leftPaddle.points++;
       console.log(leftPaddle.points);
+
     }
     else if (ballRight < 0) {
       rightPaddle.points++;
       console.log(rightPaddle.points);
 
     }
-    reset();
+    checkAdvantage();
+
+    ////END NEW/////
 
   }
 }
@@ -284,27 +317,33 @@ function handleBallOffScreen() {
 //
 // Draws ball on screen based on its properties
 function displayBall() {
-  fill(255);
-  rect(ball.x,ball.y,ball.size,ball.size);
+  image(firePotato,ball.x,ball.y,ball.size,ball.size);
 }
 
 // displayPaddle(paddle)
 //
 // Draws the specified paddle on screen based on its properties
 function displayPaddle(paddle) {
-  fill(paddle.fill);
-  rect(paddle.x,paddle.y,paddle.w,paddle.h);
+  image(paddle.image,paddle.x,paddle.y,paddle.w,paddle.h);
+}
+///////NEW///////
+function displayLeftFlames(){
+  image(flameLeft, leftFlamesX, leftFlamesY, 40, height);
+}
+function displayRightFlames(){
+  image(flameRight, rightFlamesX, rightFlamesY, 40, height);
 }
 
-function reset(){
+function checkAdvantage(){
   if(leftPaddle.points>rightPaddle.points){
-    leftPaddle.fill='green';
-    rightPaddle.fill=255;
+    leftFlamesX = 0;
+    rightFlamesX = width;
   }
   else if (rightPaddle.points>leftPaddle.points) {
-    console.log('allo');
-    rightPaddle.fill='green';
-    leftPaddle.fill=255;
+       console.log('allo');
+       rightFlamesX = width-40;
+       leftFlamesX = -40;
 
-  }
+     }
 }
+/////END NEW//////
