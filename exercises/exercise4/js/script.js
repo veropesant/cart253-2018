@@ -354,7 +354,7 @@ function checkAdvantage(){
 function reset(lastPoint){
   ball.x = width/2;
   ball.y = height/2;
-  var randomVY = random(-100, 100);
+  var randomVY = random(-5, 5);
   console.log(randomVY);
   ball.vy = constrain(randomVY, -ball.maxSpeed, ball.maxSpeed);
 
