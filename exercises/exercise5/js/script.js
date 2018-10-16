@@ -297,22 +297,19 @@ function handleBallOffScreen() {
     // carries on moving with the same velocity after its
     // position is reset.
     // This is where we would count points etc!
-
     /////NEW/////
-    //increase points depending on which side of the screen the ball went out
     if(ballLeft > width){
       leftPaddle.points++;
+      console.log(leftPaddle.points);
       reset('pointLeft');
 
     }
     else if (ballRight < 0) {
       rightPaddle.points++;
+      console.log(rightPaddle.points);
       reset('pointRight');
 
     }
-
-    //calls the function to make the flame appear
-    //on the side of the screen with the highest score
     checkAdvantage();
 
 
@@ -335,7 +332,6 @@ function displayPaddle(paddle) {
   image(paddle.image,paddle.x,paddle.y,paddle.w,paddle.h);
 }
 ///////NEW///////
-//displays the flames on the left and right of the screen, but hidden at first
 function displayLeftFlames(){
   image(flameLeft, leftFlamesX, leftFlamesY, 40, height);
 }
@@ -344,22 +340,22 @@ function displayRightFlames(){
 }
 
 function checkAdvantage(){
-  //displays the flames in view on one side of the screen
   if(leftPaddle.points>rightPaddle.points){
     leftFlamesX = 0;
     rightFlamesX = width;
   }
   else if (rightPaddle.points>leftPaddle.points) {
-    rightFlamesX = width-40;
-    leftFlamesX = -40;
+       console.log('allo');
+       rightFlamesX = width-40;
+       leftFlamesX = -40;
 
-  }
+     }
 }
-//Resets the ball's position, sets its direction and its Y velocity randomly
 function reset(lastPoint){
   ball.x = width/2;
   ball.y = height/2;
   var randomVY = random(-5, 5);
+  console.log(randomVY);
   ball.vy = constrain(randomVY, -ball.maxSpeed, ball.maxSpeed);
 
   if(lastPoint=='pointRight'){
@@ -368,5 +364,6 @@ function reset(lastPoint){
   else{
     ball.vx=-ball.speed;
   }
+  console.log('VY:'+ball.vy);
 }
 /////END NEW//////
