@@ -20,6 +20,7 @@ var leftFlamesX;
 var leftFlamesY;
 var rightFlamesX;
 var rightFlamesY;
+///END NEW////
 
 // BALL
 
@@ -31,7 +32,8 @@ var ball = {
   size: 40,
   vx: 0,
   vy: 0,
-  speed: 3
+  speed: 3,
+  maxSpeed: 10
 }
 
 // PADDLES
@@ -103,11 +105,12 @@ function setup() {
   rectMode(CENTER);
   noStroke();
   fill(fgColor);
-
+  ////NEW//////
   leftFlamesX=-40;
   leftFlamesY=0;
   rightFlamesX=width;
   rightFlamesY=0;
+  /////END NEW//////
 
   setupPaddles();
   setupBall();
@@ -289,8 +292,7 @@ function handleBallOffScreen() {
   // Check for ball going off the sides
   if (ballRight < 0 || ballLeft > width) {
     // If it went off either side, reset it to the centre
-    ball.x = width/2;
-    ball.y = height/2;
+
     // NOTE that we don't change its velocity here so it just
     // carries on moving with the same velocity after its
     // position is reset.
@@ -299,14 +301,17 @@ function handleBallOffScreen() {
     if(ballLeft > width){
       leftPaddle.points++;
       console.log(leftPaddle.points);
+      reset('pointLeft');
 
     }
     else if (ballRight < 0) {
       rightPaddle.points++;
       console.log(rightPaddle.points);
+      reset('pointRight');
 
     }
     checkAdvantage();
+
 
     ////END NEW/////
 
@@ -345,5 +350,20 @@ function checkAdvantage(){
        leftFlamesX = -40;
 
      }
+}
+function reset(lastPoint){
+  ball.x = width/2;
+  ball.y = height/2;
+  var randomVY = random(-100, 100);
+  console.log(randomVY);
+  ball.vy = constrain(randomVY, -ball.maxSpeed, ball.maxSpeed);
+
+  if(lastPoint=='pointRight'){
+    ball.vx = ball.speed;
+  }
+  else{
+    ball.vx=-ball.speed;
+  }
+  console.log('VY:'+ball.vy);
 }
 /////END NEW//////
