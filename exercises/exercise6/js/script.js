@@ -50,7 +50,9 @@ function draw() {
 
   ball.handleCollision(leftPaddle);
   ball.handleCollision(rightPaddle);
-
+  push();
+  fill(255); // fixed : added a fill for the ball and the handles
+  pop();
   ball.display();
   leftPaddle.display();
   rightPaddle.display(); //fixed : closed the parentheses at the end
