@@ -52,5 +52,5 @@ function draw() {
 
   ball.display();
   leftPaddle.display();
-  rightPaddle.display(); //fixed : closed the parentheses
+  rightPaddle.display(); //fixed : closed the parentheses at the end
 }
