@@ -22,7 +22,7 @@ function setup() {
   createCanvas(640,480); //fixed : corrected the spelling mistake in the word createCanvas
   noStroke();
   // Create a ball
-  ball = new Ball(width/2,height/2,50,50,10,50);
+  ball = new Ball(width/2,height/2,5,5,10,5); //fixed : reduced the velocities and speed to make the ball go slower
   // Create the right paddle with UP and DOWN as controls
   rightPaddle = new Paddle(width-10,height/2,10,60,10,UP_ARROW,DOWN_ARROW);//fixed : changed the height attribute of the right paddle from 600 to 60
   // Create the left paddle with W and S as controls
