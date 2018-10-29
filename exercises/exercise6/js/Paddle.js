@@ -22,7 +22,7 @@ function Paddle(x,y,w,h,speed,downKey,upKey) { //fixed : corrected the spelling 
 //
 // Check if the up or down keys are pressed and update velocity
 // appropriately
-Paddle.proto.handleInput = function() {
+Paddle.prototype.handleInput = function() { //fixed : changed the .proto for .prototype
   if (keyDown(upKey)) {
     this.vy = -this.speed;
   }
