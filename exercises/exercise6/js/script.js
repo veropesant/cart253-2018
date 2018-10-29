@@ -43,9 +43,9 @@ function draw() {
   leftPaddle.update();
   rightPaddle.update();
 
-  if (ball.isOffTheScreen()){
+  if (ball.isOffScreen()){ // fixed : corrected function isOffTheScreen for isOffScreen
     reset();
-  }//fixed : closed the brackets of the if 
+  }//fixed : closed the brackets of the if
 
   ball.handleCollision(leftPaddle);
   ball.handleCollision(rightPaddle);
