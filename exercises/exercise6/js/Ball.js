@@ -63,14 +63,14 @@ Ball.prototype.display = function () {
 // and if so reverse x velocity to bounce
 Ball.prototype.handleCollision = function(paddle) { //fixed : deleted the unexpected token '(' and corrected the spelling mistake in .prototype
   // Check if the ball overlaps the paddle on x axis
-  if (this.x + this.size > paddle.x && this.x < paddle.x + paddle.w) {
+  if ((this.x + this.size) > paddle.x && this.x < paddle.x + paddle.w) {
     // Check if the ball overlaps the paddle on y axis
     if (this.y + this.size > paddle.y && this.y < paddle.y + paddle.h) {
       // If so, move ball back to previous position (by subtracting current velocity)
       this.x -= this.vx;
       this.y -= this.vy;
       // Reverse x velocity to bounce
-      this.vx = this.vx;
+      this.vx = -this.vx;
     }
   }
 }
