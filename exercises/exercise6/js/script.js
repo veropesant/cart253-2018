@@ -35,7 +35,7 @@ function setup() {
 // Handles input, updates all the elements, checks for collisions
 // and displays everything.
 function draw() {
-  background(0); //fixed : added a background color to the canvas
+  background(0);
 
   leftPaddle.handleInput();
   rightPaddle.handleInput();

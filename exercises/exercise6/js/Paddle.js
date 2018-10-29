@@ -27,7 +27,7 @@ Paddle.prototype.handleInput = function() { //fixed : changed the .proto for .pr
     this.vy = -this.speed;
   }
   else if (keyIsDown(this.downKey)) {//fixed : changed keyDown for keyIsDown and corrected downKey for this.downKey
-    this.vy = -this.speed;
+    this.vy = this.speed; //fixed : removed the '-' before this.speed, because we want it to go down
   }
 }
 
