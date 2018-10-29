@@ -18,6 +18,7 @@ var rightPaddle;
 //
 // Creates the ball and paddles
 function setup() {
+
   createCanvas(640,480); //fixed : corrected the spelling mistake in the word createCanvas
   noStroke();
   // Create a ball
@@ -34,7 +35,7 @@ function setup() {
 // Handles input, updates all the elements, checks for collisions
 // and displays everything.
 function draw() {
-
+  background(0); //fixed : added a background color to the canvas
 
   leftPaddle.handleInput();
   rightPaddle.handleInput();
@@ -49,7 +50,6 @@ function draw() {
 
   ball.handleCollision(leftPaddle);
   ball.handleCollision(rightPaddle);
-
 
   ball.display();
   leftPaddle.display();
