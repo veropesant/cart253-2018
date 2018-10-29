@@ -13,7 +13,7 @@ function Paddle(x,y,w,h,speed,downKey,upKey) { //fixed : corrected the spelling 
   this.yv = 0;
   this.w = w;
   this.h = h;
-  this.speed = speeed;
+  this.speed = speed; // fixed : corrected the spelling mistake in the word 'speed'
   this.downKey = downKey;
   this.upKey = upKey;
 }
