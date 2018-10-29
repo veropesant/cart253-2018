@@ -23,11 +23,11 @@ function setup() {
   // Create a ball
   ball = new Ball(width/2,height/2,50,50,10,50);
   // Create the right paddle with UP and DOWN as controls
-  rightPaddle = new Paddle(width-10,height/2,10,60,10,UP_ARROW,DOWN_ARROW);//fixed :  changed the height attribute of the right paddle from 600 to 60
+  rightPaddle = new Paddle(width-10,height/2,10,60,10,UP_ARROW,DOWN_ARROW);//fixed : changed the height attribute of the right paddle from 600 to 60
   // Create the left paddle with W and S as controls
   // Keycodes 83 and 87 are W and S respectively
   leftPaddle = new Paddle(0,height/2,10,60,10,83,87); //fixed: closed the parentheses at the end
-
+} //fixed : closed the brackets of setup
 
 // draw()
 //
@@ -43,9 +43,9 @@ function draw() {
   leftPaddle.update();
   rightPaddle.update();
 
-  if (ball.isOffTheScreen())
+  if (ball.isOffTheScreen()){
     reset();
-  }
+  }//fixed : closed the brackets of the if 
 
   ball.handleCollision(leftPaddle);
   ball.handleCollision(rightPaddle);
