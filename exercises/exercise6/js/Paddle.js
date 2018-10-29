@@ -43,5 +43,5 @@ Paddle.prototype.update = function() {
 //
 // Draw the paddle as a rectangle on the screen
 Paddle.prototype.display = function() { //fixed : removed the unexpected token ')' and corrected the spelling mistake in the word 'display'
-  rectangle(this.x,this.y,this.w,this.h);
+  rect(this.x,this.y,this.w,this.h); //fixed : changed the function 'rectangle()' for 'rect()', because the first one does not exist
 }
