@@ -39,7 +39,7 @@ function draw() {
   leftPaddle.handleInput();
   rightPaddle.handleInput();
 
-  ball.update();
+  ball.update(); //fixed : added the parentheses after update
   leftPaddle.update();
   rightPaddle.update();
 
