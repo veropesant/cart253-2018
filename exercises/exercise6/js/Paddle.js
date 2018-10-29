@@ -42,6 +42,6 @@ Paddle.prototype.update = function() {
 // display()
 //
 // Draw the paddle as a rectangle on the screen
-Paddle.prototype.disploy = function() { //fixed : removed the unexpected token ')'
+Paddle.prototype.display = function() { //fixed : removed the unexpected token ')' and corrected the spelling mistake in the word 'display'
   rectangle(this.x,this.y,this.w,this.h);
 }
