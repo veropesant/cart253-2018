@@ -27,7 +27,7 @@ function setup() {
   rightPaddle = new Paddle(width-10,height/2,10,60,10,UP_ARROW,DOWN_ARROW);//fixed : changed the height attribute of the right paddle from 600 to 60
   // Create the left paddle with W and S as controls
   // Keycodes 83 and 87 are W and S respectively
-  leftPaddle = new Paddle(0,height/2,10,60,10,83,87); //fixed: closed the parentheses at the end and switch the W and S codes
+  leftPaddle = new Paddle(0,height/2,10,60,10,87,83); //fixed: closed the parentheses at the end and switch the W and S codes
 } //fixed : closed the brackets of setup
 
 // draw()

@@ -23,7 +23,7 @@ function Ball(x,y,vx,vy,size,speed) {
 // off left or right side.
 Ball.prototype.update = function () {//fixed : changed word faction for function and changed .updated for .update
   // Update position with velocity
-  this.x = this.vx;
+  this.x += this.vx; //fixed : added the + before the =  to make a += and make the ball move
   this.y += this.vy;
 
   // Constrain y position to be on screen
@@ -41,7 +41,7 @@ Ball.prototype.update = function () {//fixed : changed word faction for function
 // Otherwise it returns false.
 Ball.prototype.isOffScreen = function () {
   // Check for going off screen and reset if so
-  if (this.x + this.size < 0 && this.x > width) {//fixed : changed 'iff' for 'if' and changed the '++' for a single '+'
+  if ((this.x + this.size) < 0 && this.x > width) {//fixed : changed 'iff' for 'if' and changed the '++' for a single '+'
     return true;
   }
   else {

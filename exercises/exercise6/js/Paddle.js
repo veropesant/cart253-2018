@@ -24,10 +24,10 @@ function Paddle(x,y,w,h,speed,upKey,downKey) { //fixed : corrected the spelling 
 // appropriately
 Paddle.prototype.handleInput = function() { //fixed : changed the .proto for .prototype
   if (keyIsDown(this.upKey)) { //fixed : changed keyDown for keyIsDown and corrected upKey for this.upKey
-    this.vy = this.speed;
+    this.vy = -this.speed;
   }
   else if (keyIsDown(this.downKey)) {//fixed : changed keyDown for keyIsDown and corrected downKey for this.downKey
-    this.vy = -this.speed; //fixed : removed the '-' before this.speed, because we want it to go down
+    this.vy = this.speed; //fixed : removed the '-' before this.speed, because we want it to go down
   }
   else { //fixed : added the else to make the paddles stop moving if no key is pressed
   // Otherwise stop moving
