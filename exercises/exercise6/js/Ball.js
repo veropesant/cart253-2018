@@ -41,7 +41,7 @@ Ball.prototype.update = function () {//fixed : changed word faction for function
 // Otherwise it returns false.
 Ball.prototype.isOffScreen = function () {
   // Check for going off screen and reset if so
-  if ((this.x + this.size) < 0 && this.x > width) {//fixed : changed 'iff' for 'if' and changed the '++' for a single '+'
+  if ((this.x + this.size) < 0 || this.x > width) {//fixed : changed 'iff' for 'if' , changed the '++' for a single '+' and changed && for || in the condition
     return true;
   }
   else {
