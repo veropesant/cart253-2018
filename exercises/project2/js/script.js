@@ -17,7 +17,7 @@ var rightPaddle;
 var rightPaddleScore=0;
 var leftPaddleScore=0;
 var gameOver=true;
-var maxScore=5;
+var maxScore=10;
 var startPanel;
 var endPanel;
 var startPanelActive = false;
@@ -36,10 +36,10 @@ function setup() {
     meanBall = new MeanBall(width/2, height/2, 5, 5, 15, 5, 'red');
 
     // Create the right paddle with UP and DOWN as controls
-    rightPaddle = new Paddle(width-10,height/2,10,60,10,DOWN_ARROW,UP_ARROW);
+    rightPaddle = new Paddle(width-10,height/2,10,60,10,DOWN_ARROW,UP_ARROW, 'blue');
     // Create the left paddle with W and S as controls
     // Keycodes 83 and 87 are W and S respectively
-    leftPaddle = new Paddle(0,height/2,10,60,10,83,87);
+    leftPaddle = new Paddle(0,height/2,10,60,10,83,87, 'green');
 
     startPanel = new Panel('start','Press ENTER to start', 'PONG GAME');
     endPanel = new Panel('end','Press ENTER to restart', 'GAME OVER');
@@ -135,6 +135,8 @@ function reset(){
     meanBall.size = 15;
     meanBall.vx = 5;
     meanBall.vy = 5;
+    meanBall.x = width/2;
+    meanBall.y = height/2;
     leftPaddleScore=0;
     rightPaddleScore=0;
     gameOver = false;
