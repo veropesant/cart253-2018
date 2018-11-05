@@ -5,7 +5,7 @@
 // Projectile constructor
 //
 // Sets the properties with the provided arguments or defaults
-function Projectile(x,y,size,vx,vy,speed,color) {
+function Projectile(x,y,size,vx,vy,speed,color,isHurting) {
   this.x = x;
   this.y = y;
   this.vx = vx;
@@ -13,6 +13,7 @@ function Projectile(x,y,size,vx,vy,speed,color) {
   this.size=size;
   this.speed = speed;
   this.color = color;
+  this.isHurting =isHurting;
 }
 
 // update()
@@ -35,6 +36,27 @@ Projectile.prototype.update = function () {
     this.vx=0;
   }
 }
+
+// handleCollision(enemy)
+//
+// Check if this ball overlaps the paddle passed as an argument
+// and if so reverse x velocity to bounce
+Projectile.prototype.handleCollision = function(enemy) {
+  // Check if the ball overlaps the enemy on x axis
+  if (this.x + this.size > enemy.x && this.x < enemy.x + enemy.w) {
+    // Check if the ball overlaps the enemy on y axis
+    if (this.y + this.size > enemy.y && this.y < enemy.y + enemy.h) {
+      this.size=0;
+      this.vx=0;
+      this.vy=0;
+      enemy.health=enemy.health-1;
+      console.log('health: '+enemy.health);
+      this.isHurting = false;
+      console.log('after: '+this.isHurting);
+    }
+  }
+}
+
 
 // display()
 //

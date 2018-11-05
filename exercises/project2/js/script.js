@@ -42,10 +42,10 @@ function setup() {
     meanBall = new MeanBall(width/2, height/2, 5, 5, 15, 5, 'red');
 
     // Create the right paddle with UP and DOWN as controls and left arrow as shoot key
-    rightPaddle = new Paddle(width-10,height/2,10,60,10,DOWN_ARROW,UP_ARROW,37,'blue');
+    rightPaddle = new Paddle(width-10,height/2,10,60,10,DOWN_ARROW,UP_ARROW,37,'blue', 3);
     // Create the left paddle with W and S as controls and D as shoot key
     // Keycodes 83 and 87 are W and S respectively
-    leftPaddle = new Paddle(0,height/2,10,60,10,83,87,68,'green');
+    leftPaddle = new Paddle(0,height/2,10,60,10,83,87,68,'green', 3);
 
     startPanel = new Panel('start','Press ENTER to start', 'PONG GAME');
     endPanel = new Panel('end','Press ENTER to restart', 'GAME OVER');
@@ -58,7 +58,6 @@ function setup() {
 function draw() {
     background(0);
     if(gameOver == false){
-      console.log('go');
         leftPaddle.handleInput();
         rightPaddle.handleInput();
         handleEndGame();
@@ -81,12 +80,21 @@ function draw() {
           for(var i=0; i<rightProjectile.length; i++){
             rightProjectile[i].display();
             rightProjectile[i].update();
+            if(rightProjectile[i].isHurting===true){
+              console.log('before: '+rightProjectile[i].isHurting);
+              rightProjectile[i].handleCollision(leftPaddle);
+            }
           }
         }
         if(leftProjectileActive==true){
           for(var i=0; i<leftProjectile.length; i++){
             leftProjectile[i].display();
             leftProjectile[i].update();
+            if(leftProjectile[i].isHurting===true){
+              console.log('before: '+leftProjectile[i].isHurting);
+              leftProjectile[i].handleCollision(rightPaddle);
+            }
+
           }
         }
 
@@ -196,7 +204,7 @@ function keyPressed(){
       if(keyCode===rightPaddle.shootKey){
         if(nbRightProjectile>0){
           rightProjectileActive=true;
-          rightProjectile.push(new Projectile(rightPaddle.x, rightPaddle.y+rightPaddle.h/2-5,10,-5,0,5,rightPaddle.color));
+          rightProjectile.push(new Projectile(rightPaddle.x-10, rightPaddle.y+rightPaddle.h/2-5,10,-5,0,5,rightPaddle.color,true));
           nbRightProjectile--;
         }
 
@@ -205,7 +213,7 @@ function keyPressed(){
       else if(keyCode===leftPaddle.shootKey){
         if(nbLeftProjectile>0){
           leftProjectileActive=true;
-          leftProjectile.push(new Projectile(leftPaddle.x, leftPaddle.y+leftPaddle.h/2-5,10,5,0,5,leftPaddle.color));
+          leftProjectile.push(new Projectile(leftPaddle.x+10, leftPaddle.y+leftPaddle.h/2-5,10,5,0,5,leftPaddle.color,true));
           nbLeftProjectile--;
         }
 
