@@ -23,6 +23,10 @@ var endPanel;
 var startPanelActive = false;
 var endPanelActive = false;
 var winner = '';
+var leftProjectile = null;
+var rightProjectile = null;
+var rightProjectileActive = false;
+var leftProjectileActive = false;
 
 // setup()
 //
@@ -71,6 +75,15 @@ function draw() {
         ball.display();
         leftPaddle.display();
         rightPaddle.display();
+        if(rightProjectileActive==true){
+          rightProjectile.display();
+          rightProjectile.update();
+        }
+        if(leftProjectileActive==true){
+          leftProjectile.display();
+          leftProjectile.update();
+        }
+
 
         text(leftPaddleScore, 50, 20);
         text(rightPaddleScore, width-50, 20);
@@ -158,5 +171,17 @@ function keyPressed(){
         if(keyCode===ENTER){
           reset();
         }
+    }
+
+    if(gameOver==false){
+      if(keyCode===rightPaddle.shootKey){
+        rightProjectileActive=true;
+        rightProjectile = new Projectile(rightPaddle.x, rightPaddle.y+rightPaddle.h/2-5,10,-5,0,5,rightPaddle.color);
+      }
+      else if(keyCode===leftPaddle.shootKey){
+        leftProjectileActive=true;
+        leftProjectile = new Projectile(leftPaddle.x, leftPaddle.y+leftPaddle.h/2-5,10,5,0,5,leftPaddle.color);
+
+      }
     }
 }
