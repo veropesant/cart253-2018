@@ -23,8 +23,8 @@ var endPanel;
 var startPanelActive = false;
 var endPanelActive = false;
 var winner = '';
-var leftProjectile = null;
-var rightProjectile = null;
+var leftProjectile = [];
+var rightProjectile = [];
 var rightProjectileActive = false;
 var leftProjectileActive = false;
 
@@ -76,8 +76,12 @@ function draw() {
         leftPaddle.display();
         rightPaddle.display();
         if(rightProjectileActive==true){
-          rightProjectile.display();
-          rightProjectile.update();
+          // console.log(rightProjectile.length);
+          for(var i=0; i<=rightProjectile.length-1; i++){
+            console.log(rightProjectile[i]);
+            rightProjectile[i].display();
+            rightProjectile[i].update();
+          }
         }
         if(leftProjectileActive==true){
           leftProjectile.display();
@@ -176,7 +180,7 @@ function keyPressed(){
     if(gameOver==false){
       if(keyCode===rightPaddle.shootKey){
         rightProjectileActive=true;
-        rightProjectile = new Projectile(rightPaddle.x, rightPaddle.y+rightPaddle.h/2-5,10,-5,0,5,rightPaddle.color);
+        rightProjectile.push(new Projectile(rightPaddle.x, rightPaddle.y+rightPaddle.h/2-5,10,-5,0,5,rightPaddle.color));
       }
       else if(keyCode===leftPaddle.shootKey){
         leftProjectileActive=true;
