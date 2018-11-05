@@ -141,8 +141,11 @@ function endGame(){
 }
 
 function reset(){
+  //reset ball
     ball.vx=5;
     ball.vy=5;
+
+    //reset the paddles
     leftPaddle.speed = 10;
     rightPaddle.speed = 10;
     leftPaddle.h=60;
@@ -151,17 +154,27 @@ function reset(){
     rightPaddle.w=10;
     leftPaddle.y=height/2;
     rightPaddle.y=height/2;
+
+    //reset mean ball
     meanBall.size = 15;
     meanBall.vx = 5;
     meanBall.vy = 5;
     meanBall.x = width/2;
     meanBall.y = height/2;
+
+    //reset projectile arrays and origin number
+    rightProjectile=[];
+    leftProjectile=[];
+    nbRightProjectile=5;
+    nbLeftProjectile=5;
+
+    //reset score
     leftPaddleScore=0;
     rightPaddleScore=0;
+
+    //set the game state and endpanel state to false
     gameOver = false;
     endPanelActive = false;
-    console.log('restart');
-    console.log(endPanelActive);
 
 }
 
