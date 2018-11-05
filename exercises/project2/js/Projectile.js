@@ -50,11 +50,30 @@ Projectile.prototype.handleCollision = function(enemy) {
       this.vx=0;
       this.vy=0;
       enemy.health=enemy.health-1;
+      this.showUpdateText('-1', enemy);
       console.log('health: '+enemy.health);
       this.isHurting = false;
       console.log('after: '+this.isHurting);
     }
   }
+}
+
+//showUpdateText()
+//
+//Make a text appear for 1sec to show the damage taken
+Projectile.prototype.showUpdateText = function(text, enemy){
+  updateText = text;
+  if(enemy.side=='left'){
+    updateTextX = enemy.x+20;
+  }else{
+    updateTextX = enemy.x-20;
+  }
+  updateTextY = enemy.y-20;
+  setTimeout(function(){
+        updateText = '';
+        updateTextX = 0;
+        updateTextY = 0;
+  }, 1000);
 }
 
 

@@ -29,6 +29,9 @@ var rightProjectileActive = false;
 var leftProjectileActive = false;
 var nbRightProjectile = 5;
 var nbLeftProjectile = 5;
+var updateText = '';
+var updateTextX = 0;
+var updateTextY = 0;
 
 // setup()
 //
@@ -42,10 +45,10 @@ function setup() {
     meanBall = new MeanBall(width/2, height/2, 5, 5, 15, 5, 'red');
 
     // Create the right paddle with UP and DOWN as controls and left arrow as shoot key
-    rightPaddle = new Paddle(width-10,height/2,10,60,10,DOWN_ARROW,UP_ARROW,37,'blue', 3);
+    rightPaddle = new Paddle(width-10,height/2,10,60,10,DOWN_ARROW,UP_ARROW,37,'blue', 3, 'right');
     // Create the left paddle with W and S as controls and D as shoot key
     // Keycodes 83 and 87 are W and S respectively
-    leftPaddle = new Paddle(0,height/2,10,60,10,83,87,68,'green', 3);
+    leftPaddle = new Paddle(0,height/2,10,60,10,83,87,68,'green', 3, 'left');
 
     startPanel = new Panel('start','Press ENTER to start', 'PONG GAME');
     endPanel = new Panel('end','Press ENTER to restart', 'GAME OVER');
@@ -98,7 +101,7 @@ function draw() {
           }
         }
 
-
+        text(updateText, updateTextX, updateTextY);
         text(leftPaddleScore, 50, 20);
         text(rightPaddleScore, width-50, 20);
     }
