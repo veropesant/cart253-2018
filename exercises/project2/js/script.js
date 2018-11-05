@@ -27,6 +27,8 @@ var leftProjectile = [];
 var rightProjectile = [];
 var rightProjectileActive = false;
 var leftProjectileActive = false;
+var nbRightProjectile = 5;
+var nbLeftProjectile = 5;
 
 // setup()
 //
@@ -76,16 +78,16 @@ function draw() {
         leftPaddle.display();
         rightPaddle.display();
         if(rightProjectileActive==true){
-          // console.log(rightProjectile.length);
-          for(var i=0; i<=rightProjectile.length-1; i++){
-            console.log(rightProjectile[i]);
+          for(var i=0; i<rightProjectile.length; i++){
             rightProjectile[i].display();
             rightProjectile[i].update();
           }
         }
         if(leftProjectileActive==true){
-          leftProjectile.display();
-          leftProjectile.update();
+          for(var i=0; i<leftProjectile.length; i++){
+            leftProjectile[i].display();
+            leftProjectile[i].update();
+          }
         }
 
 
@@ -179,12 +181,20 @@ function keyPressed(){
 
     if(gameOver==false){
       if(keyCode===rightPaddle.shootKey){
-        rightProjectileActive=true;
-        rightProjectile.push(new Projectile(rightPaddle.x, rightPaddle.y+rightPaddle.h/2-5,10,-5,0,5,rightPaddle.color));
+        if(nbRightProjectile>0){
+          rightProjectileActive=true;
+          rightProjectile.push(new Projectile(rightPaddle.x, rightPaddle.y+rightPaddle.h/2-5,10,-5,0,5,rightPaddle.color));
+          nbRightProjectile--;
+        }
+
+
       }
       else if(keyCode===leftPaddle.shootKey){
-        leftProjectileActive=true;
-        leftProjectile = new Projectile(leftPaddle.x, leftPaddle.y+leftPaddle.h/2-5,10,5,0,5,leftPaddle.color);
+        if(nbLeftProjectile>0){
+          leftProjectileActive=true;
+          leftProjectile.push(new Projectile(leftPaddle.x, leftPaddle.y+leftPaddle.h/2-5,10,5,0,5,leftPaddle.color));
+          nbLeftProjectile--;
+        }
 
       }
     }
