@@ -11,6 +11,7 @@
 
 // Variable to contain the objects representing our ball and paddles
 var ball;
+var meanBall;
 var leftPaddle;
 var rightPaddle;
 var rightPaddleScore=0;
@@ -30,6 +31,10 @@ function setup() {
     createCanvas(640,480);
     // Create a ball
     ball = new Ball(width/2,height/2,5,5,10,5);
+
+    //Create a MeanBall
+    meanBall = new MeanBall(width/2, height/2, 5, 5, 15, 5, 'red');
+
     // Create the right paddle with UP and DOWN as controls
     rightPaddle = new Paddle(width-10,height/2,10,60,10,DOWN_ARROW,UP_ARROW);
     // Create the left paddle with W and S as controls
@@ -77,6 +82,14 @@ function draw() {
         startPanelActive = true;
     }
 
+    //If more than 4 points have been scored in total, the mean ball appears
+    if((leftPaddleScore+rightPaddleScore)>=2){
+      meanBall.display();
+      meanBall.update();
+      meanBall.handleCollision(leftPaddle);
+      meanBall.handleCollision(rightPaddle);
+    }
+
 }
 
 //< >
@@ -98,6 +111,13 @@ function endGame(){
     ball.vy = 0;
     leftPaddle.speed = 0;
     rightPaddle.speed = 0;
+    leftPaddle.w=0;
+    leftPaddle.h=0;
+    rightPaddle.w=0;
+    rightPaddle.h=0;
+    meanBall.size=0;
+    meanBall.vx=0;
+    meanBall.vy=0;
     endPanelActive = true;
 }
 
@@ -106,6 +126,15 @@ function reset(){
     ball.vy=5;
     leftPaddle.speed = 10;
     rightPaddle.speed = 10;
+    leftPaddle.h=60;
+    leftPaddle.w=10;
+    rightPaddle.h=60;
+    rightPaddle.w=10;
+    leftPaddle.y=height/2;
+    rightPaddle.y=height/2;
+    meanBall.size = 15;
+    meanBall.vx = 5;
+    meanBall.vy = 5;
     leftPaddleScore=0;
     rightPaddleScore=0;
     gameOver = false;
