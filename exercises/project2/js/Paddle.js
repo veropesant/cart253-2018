@@ -21,6 +21,7 @@ function Paddle(x,y,w,h,speed,downKey,upKey, shootKey, color, health, side) {
   this.health = health;
   this.side=side;
   this.isDead = false;
+  this.score=0;
 }
 
 // handleInput()

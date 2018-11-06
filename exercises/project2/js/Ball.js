@@ -44,11 +44,11 @@ Ball.prototype.isOffScreen = function () {
   if (this.x + this.size < 0 || this.x > width) {
 
     if(this.x + this.size < 0){
-      rightPaddleScore=rightPaddleScore+1;
-      // console.log('right: '+rightPaddleScore);
+      rightPaddle.score++;
+      // console.log('right: '+rightPaddle.score);
     }else if(this.x > width){
-      leftPaddleScore=leftPaddleScore+1;
-      // console.log('left: '+leftPaddleScore);
+      leftPaddle.score++;
+      // console.log('left: '+leftPaddle.score);
     }
     return true;
   }

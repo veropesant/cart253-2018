@@ -14,8 +14,6 @@ var ball;
 var meanBall;
 var leftPaddle;
 var rightPaddle;
-var rightPaddleScore=0;
-var leftPaddleScore=0;
 var gameOver=true;
 var maxScore=20;
 var startPanel;
@@ -37,6 +35,10 @@ var dramaticSound;
 var dramaticSoundActive=true;
 var pewSound;
 var healthImage;
+var healthRightPositionX=520;
+var healthRightPositionY=30;
+var healthLeftPositionX= 90;
+var healthLeftPositionY=30;
 
 //preload()
 //
@@ -85,8 +87,8 @@ function draw() {
         fill('#9BDDF3');
         textFont('Monoton');
         textSize(200);
-        text(leftPaddleScore, width/4, height/1.55);
-        text(rightPaddleScore, width/1.37, height/1.55);
+        text(leftPaddle.score, width/4, height/1.55);
+        text(rightPaddle.score, width/1.37, height/1.55);
         rect(width/2, 0, 5, height);
         pop();
 
@@ -133,7 +135,12 @@ function draw() {
         }
 
         text(updateText, updateTextX, updateTextY);
-
+        for(var i=0; i<=leftPaddle.health-1; i++){
+          image(healthImage, healthLeftPositionX+i*50, healthLeftPositionY);
+        }
+        for(var i=0; i<=rightPaddle.health-1; i++){
+          image(healthImage, healthRightPositionX-i*50, healthRightPositionY);
+        }
     }
     else if(endPanelActive==true){
         endPanel.display();
@@ -143,7 +150,7 @@ function draw() {
     }
 
     //If more than 4 points have been scored in total, the mean ball appears
-    if((leftPaddleScore+rightPaddleScore)>=2){
+    if((leftPaddle.score+rightPaddle.score)>=2){
 
       if(meanBall.active==true){
         if(dramaticSoundActive==true){
@@ -164,9 +171,9 @@ function draw() {
 
 //< >
 function handleEndGame(){
-    if(leftPaddleScore>=maxScore || rightPaddleScore>=maxScore){
+    if(leftPaddle.score>=maxScore || rightPaddle.score>=maxScore){
         gameOver=true;
-        if(leftPaddleScore>rightPaddleScore){
+        if(leftPaddle.score>rightPaddle.score){
             winner = 'Left';
             endGame();
         }else{
@@ -225,8 +232,8 @@ function reset(){
     nbLeftProjectile=5;
 
     //reset score
-    leftPaddleScore=0;
-    rightPaddleScore=0;
+    leftPaddle.score=0;
+    rightPaddle.score=0;
 
     //set the game state and endpanel state to false
     gameOver = false;

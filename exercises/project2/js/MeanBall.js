@@ -50,6 +50,7 @@ MeanBall.prototype.handleCollision = function(paddle, self) {
       if(this.active==true){
         this.active=false;
         if(paddle.h-40<0){
+          paddle.score=0;
           gameOver=true;
           winner=self;
           endGame();

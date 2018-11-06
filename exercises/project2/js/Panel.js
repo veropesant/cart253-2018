@@ -62,7 +62,7 @@ Panel.prototype.display = function(){
     push();
     fill('#022D41');
     textSize(15);
-    text(winner +' side wins! \n '+ leftPaddleScore + ' | '+rightPaddleScore, width/2, height/2);
+    text(winner +' side wins! \n '+ leftPaddle.score + ' | '+rightPaddle.score, width/2, height/2);
     pop();
     push();
     fill('#FE424D');
