@@ -43,16 +43,22 @@ Paddle.prototype.handleInput = function() {
 //
 //Check if the health equals zero. If it does, it paralayzes the paddle for 2 sec
 // then restores health and vx/vy
-Paddle.prototype.handleHealth = function() {
+Paddle.prototype.handleHealth = function(paddle) {
   if(this.health<1 && !this.isDead){
     this.isDead = true;
     this.speed=0;
+    this.color='red';
     var that = this;
     setTimeout(function() {
       console.log('revive now');
       that.health=3;
       that.speed=10;
       that.isDead = false;
+      if(paddle == 'right'){
+        that.color='blue';
+      }else{
+        that.color='green';
+      }
     }, 2000);
   }
 }

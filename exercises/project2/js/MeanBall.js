@@ -12,6 +12,7 @@ function MeanBall(x,y,vx,vy,size,speed,color) {
   this.size = size;
   this.speed = speed;
   this.fillColor = color;
+  this.active=true;
 }
 
 // update()
@@ -46,7 +47,11 @@ MeanBall.prototype.handleCollision = function(paddle) {
   if (this.x + this.size > paddle.x && this.x < paddle.x + paddle.w) {
     // Check if the ball overlaps the paddle on y axis
     if (this.y + this.size > paddle.y && this.y < paddle.y + paddle.h) {
-      paddle.h = 40;
+      if(this.active==true){
+        this.active=false;
+        paddle.h = paddle.h-20;
+        console.log(paddle.h);
+      }
       this.size =0;
       this.vx=0;
       this.vy=0;

@@ -17,7 +17,7 @@ var rightPaddle;
 var rightPaddleScore=0;
 var leftPaddleScore=0;
 var gameOver=true;
-var maxScore=60;
+var maxScore=10;
 var startPanel;
 var endPanel;
 var startPanelActive = false;
@@ -45,10 +45,10 @@ function setup() {
     meanBall = new MeanBall(width/2, height/2, 5, 5, 15, 5, 'red');
 
     // Create the right paddle with UP and DOWN as controls and left arrow as shoot key
-    rightPaddle = new Paddle(width-10,height/2,10,60,10,DOWN_ARROW,UP_ARROW,37,'blue', 3, 'right');
+    rightPaddle = new Paddle(width-10,height/2,10,100,10,DOWN_ARROW,UP_ARROW,37,'blue', 3, 'right');
     // Create the left paddle with W and S as controls and D as shoot key
     // Keycodes 83 and 87 are W and S respectively
-    leftPaddle = new Paddle(0,height/2,10,60,10,83,87,68,'green', 3, 'left');
+    leftPaddle = new Paddle(0,height/2,10,100,10,83,87,68,'green', 3, 'left');
 
     startPanel = new Panel('start','Press ENTER to start', 'PONG GAME');
     endPanel = new Panel('end','Press ENTER to restart', 'GAME OVER');
@@ -62,8 +62,8 @@ function draw() {
     background(0);
     if(gameOver == false){
 
-        leftPaddle.handleHealth();
-        rightPaddle.handleHealth();
+        leftPaddle.handleHealth('left');
+        rightPaddle.handleHealth('right');
 
         leftPaddle.handleInput();
         rightPaddle.handleInput();
@@ -90,7 +90,7 @@ function draw() {
             rightProjectile[i].update();
             if(rightProjectile[i].isHurting===true){
               console.log('before: '+rightProjectile[i].isHurting);
-              rightProjectile[i].handleCollision(leftPaddle);
+              rightProjectile[i].handleCollision(leftPaddle, rightPaddle);
             }
           }
         }
@@ -100,7 +100,7 @@ function draw() {
             leftProjectile[i].update();
             if(leftProjectile[i].isHurting===true){
               console.log('before: '+leftProjectile[i].isHurting);
-              leftProjectile[i].handleCollision(rightPaddle);
+              leftProjectile[i].handleCollision(rightPaddle, leftPaddle);
             }
 
           }
@@ -170,6 +170,8 @@ function reset(){
     rightPaddle.w=10;
     leftPaddle.y=height/2;
     rightPaddle.y=height/2;
+    leftPaddle.health=3;
+    rightPaddle.health=3;
 
     //reset mean ball
     meanBall.size = 15;
@@ -177,6 +179,7 @@ function reset(){
     meanBall.vy = 5;
     meanBall.x = width/2;
     meanBall.y = height/2;
+    meanBall.active=true;
 
     //reset projectile arrays and origin number
     rightProjectile=[];

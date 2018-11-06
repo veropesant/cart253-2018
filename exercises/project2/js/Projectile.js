@@ -41,7 +41,7 @@ Projectile.prototype.update = function () {
 //
 // Check if this ball overlaps the paddle passed as an argument
 // and if so reverse x velocity to bounce
-Projectile.prototype.handleCollision = function(enemy) {
+Projectile.prototype.handleCollision = function(enemy, self) {
   // Check if the ball overlaps the enemy on x axis
   if (this.x + this.size > enemy.x && this.x < enemy.x + enemy.w) {
     // Check if the ball overlaps the enemy on y axis
@@ -50,6 +50,10 @@ Projectile.prototype.handleCollision = function(enemy) {
       this.vx=0;
       this.vy=0;
       enemy.health--;
+      if(self.h<100){
+        self.h=self.h+20;
+      }
+
       this.showUpdateText('-1', enemy);
       console.log('health: '+enemy.health);
       this.isHurting = false;
