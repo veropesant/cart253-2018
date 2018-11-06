@@ -47,7 +47,7 @@ Paddle.prototype.handleHealth = function(paddle) {
   if(this.health<1 && !this.isDead){
     this.isDead = true;
     this.speed=0;
-    this.color='red';
+    this.color='#FE424D';
     var that = this;
     setTimeout(function() {
       console.log('revive now');
@@ -55,9 +55,9 @@ Paddle.prototype.handleHealth = function(paddle) {
       that.speed=10;
       that.isDead = false;
       if(paddle == 'right'){
-        that.color='blue';
+        that.color='#1AA6B7';
       }else{
-        that.color='green';
+        that.color='#022D41';
       }
     }, 2000);
   }

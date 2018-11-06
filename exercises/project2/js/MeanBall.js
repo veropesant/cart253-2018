@@ -63,6 +63,6 @@ MeanBall.prototype.handleCollision = function(paddle) {
 MeanBall.prototype.display = function(){
 
     fill(this.fillColor);
-    rect(this.x, this.y, this.size, this.size);
+    ellipse(this.x, this.y, this.size, this.size);
 
 }

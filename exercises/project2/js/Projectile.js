@@ -96,6 +96,6 @@ Projectile.prototype.showUpdateText = function(text, enemy){
 Projectile.prototype.display = function() {
   push();
   fill(this.color);
-  rect(this.x,this.y,this.size,this.size);
+  ellipse(this.x,this.y,this.size,this.size);
   pop()
 }
