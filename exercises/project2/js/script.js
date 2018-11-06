@@ -11,34 +11,45 @@
 
 // Variable to contain the objects representing our ball and paddles
 var ball;
+
 var meanBall;
+
 var leftPaddle;
 var rightPaddle;
+
 var gameOver=true;
 var maxScore=20;
+var winner = '';
+
 var startPanel;
 var endPanel;
 var startPanelActive = false;
 var endPanelActive = false;
-var winner = '';
+
 var leftProjectile = [];
 var rightProjectile = [];
 var rightProjectileActive = false;
 var leftProjectileActive = false;
 var nbRightProjectile = 10;
 var nbLeftProjectile = 10;
+
 var updateText = '';
 var updateTextX = 0;
 var updateTextY = 0;
+
 var popSound;
 var dramaticSound;
 var dramaticSoundActive=true;
 var pewSound;
+var boostSound;
+
 var healthImage;
 var healthRightPositionX=520;
 var healthRightPositionY=30;
 var healthLeftPositionX= 90;
 var healthLeftPositionY=30;
+
+var boost;
 
 //preload()
 //
@@ -48,6 +59,7 @@ function preload(){
   popSound = new Audio('assets/sounds/pop.mp3');
   dramaticSound = new Audio('assets/sounds/dun_dun.mp3');
   pewSound = new Audio('assets/sounds/pew.mp3');
+  boostSound = new Audio('assets/sounds/boost.mp3');
   healthImage = loadImage('assets/images/health.png');
 }
 
@@ -71,6 +83,7 @@ function setup() {
 
     startPanel = new Panel('start','Press','ENTER','to start', 'PONG GAME');
     endPanel = new Panel('end','Press','ENTER','to restart', 'GAME OVER');
+    boost = new Boost(width/2, height/2, 7, 7, 30);
 
 }
 
@@ -113,6 +126,17 @@ function draw() {
         ball.display();
         leftPaddle.display();
         rightPaddle.display();
+        if(leftPaddle.h<100 && rightPaddle.h<100 && leftPaddle.health<3 && rightPaddle.health<3){
+          boost.active=true;
+        }
+        if(boost.active==true){
+          boostSound.play();
+          boost.display();
+          boost.update();
+          boost.handleCollision(rightPaddle);
+          boost.handleCollision(leftPaddle);
+        }
+
 
         if(rightProjectileActive==true){
           for(var i=0; i<rightProjectile.length; i++){
@@ -141,6 +165,7 @@ function draw() {
         for(var i=0; i<=rightPaddle.health-1; i++){
           image(healthImage, healthRightPositionX-i*50, healthRightPositionY);
         }
+
     }
     else if(endPanelActive==true){
         endPanel.display();

@@ -54,6 +54,7 @@ Projectile.prototype.handleCollision = function(enemy, self) {
       if(self.h<100){
         self.h=self.h+20;
       }
+      
       this.showUpdateText('-1', enemy);
       enemy.color=255;
       this.isHurting = false;
