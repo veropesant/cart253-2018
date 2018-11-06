@@ -17,7 +17,7 @@ var rightPaddle;
 var rightPaddleScore=0;
 var leftPaddleScore=0;
 var gameOver=true;
-var maxScore=10;
+var maxScore=60;
 var startPanel;
 var endPanel;
 var startPanelActive = false;
@@ -27,8 +27,8 @@ var leftProjectile = [];
 var rightProjectile = [];
 var rightProjectileActive = false;
 var leftProjectileActive = false;
-var nbRightProjectile = 5;
-var nbLeftProjectile = 5;
+var nbRightProjectile = 10;
+var nbLeftProjectile = 10;
 var updateText = '';
 var updateTextX = 0;
 var updateTextY = 0;
@@ -61,6 +61,10 @@ function setup() {
 function draw() {
     background(0);
     if(gameOver == false){
+
+        leftPaddle.handleHealth();
+        rightPaddle.handleHealth();
+
         leftPaddle.handleInput();
         rightPaddle.handleInput();
         handleEndGame();
@@ -79,6 +83,7 @@ function draw() {
         ball.display();
         leftPaddle.display();
         rightPaddle.display();
+
         if(rightProjectileActive==true){
           for(var i=0; i<rightProjectile.length; i++){
             rightProjectile[i].display();
