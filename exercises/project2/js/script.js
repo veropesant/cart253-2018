@@ -45,13 +45,13 @@ function setup() {
     meanBall = new MeanBall(width/2, height/2, 5, 5, 15, 5, 'red');
 
     // Create the right paddle with UP and DOWN as controls and left arrow as shoot key
-    rightPaddle = new Paddle(width-10,height/2,10,100,10,DOWN_ARROW,UP_ARROW,37,'blue', 3, 'right');
+    rightPaddle = new Paddle(width-10,height/2,10,100,10,DOWN_ARROW,UP_ARROW,37,'#1AA6B7', 3, 'right');
     // Create the left paddle with W and S as controls and D as shoot key
     // Keycodes 83 and 87 are W and S respectively
-    leftPaddle = new Paddle(0,height/2,10,100,10,83,87,68,'green', 3, 'left');
+    leftPaddle = new Paddle(0,height/2,10,100,10,83,87,68,'#022D41', 3, 'left');
 
-    startPanel = new Panel('start','Press ENTER to start', 'PONG GAME');
-    endPanel = new Panel('end','Press ENTER to restart', 'GAME OVER');
+    startPanel = new Panel('start','Press','ENTER','to start', 'PONG GAME');
+    endPanel = new Panel('end','Press','ENTER','to restart', 'GAME OVER');
 }
 
 // draw()
@@ -59,7 +59,8 @@ function setup() {
 // Handles input, updates all the elements, checks for collisions
 // and displays everything.
 function draw() {
-    background(0);
+    background('#DAECF3');
+    textFont('Righteous');
     if(gameOver == false){
 
         leftPaddle.handleHealth('left');

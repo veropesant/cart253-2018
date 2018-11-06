@@ -6,10 +6,13 @@
 //Panel constructor
 //
 //Sets the properties with the arguments received
-function Panel(state, text, title){
+function Panel(state, text1,text2,text3, title){
   this.state = state;
-  this.text = text;
+  this.text1 = text1;
+  this.text2 = text2;
+  this.text3 = text3;
   this.title = title;
+  this.subtitle = '-remastered-';
 }
 
 
@@ -18,20 +21,47 @@ Panel.prototype.display = function(){
     fill(255);
     textAlign(CENTER);
     push();
-    fill('blue');
+    fill('#FE424D');
+    textFont('Monoton');
     textSize(80);
-    text(this.title , width/2, height/3);
+    text(this.title , width/2, height/3.5);
     pop();
-    text(this.text, (width/2), height/2);
+    push();
+    fill('#022D41');
+    textSize(30);
+    textFont('Unica One');
+    text(this.subtitle, width/2, height/2.5);
+    pop();
+    push();
+    fill('#FE424D');
+    noStroke();
+    rectMode(CENTER);
+    rect(width/2, height/1.42, 150, 50, 20);
+    pop();
+    push();
+    fill('white');
+    textSize(30);
+    textFont('Monoton');
+    text(this.text2, width/2, height/1.37);
+    pop();
+    push();
+    fill('#022D41');
+    text(this.text1, width/2, height/1.56);
+    text(this.text3, width/2, height/1.27);
+    pop();
   }else{
     fill(255);
     textAlign(CENTER);
     push();
-    fill('blue');
+    fill('#FE424D');
+    textFont('Monoton');
     textSize(80);
     text(this.title , width/2, height/3);
     pop();
+    push();
+    fill('#022D41');
     text(winner +' side wins! \n '+ leftPaddleScore + ' | '+rightPaddleScore+'\n'+this.text , (width/2), height/2);
+    pop();
   }
 
 }
