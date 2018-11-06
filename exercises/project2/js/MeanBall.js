@@ -42,19 +42,28 @@ MeanBall.prototype.update = function () {
 //
 // Check if this ball overlaps the paddle passed as an argument
 // and if so reverse x velocity to bounce
-MeanBall.prototype.handleCollision = function(paddle) {
+MeanBall.prototype.handleCollision = function(paddle, self) {
   // Check if the ball overlaps the paddle on x axis
   if (this.x + this.size > paddle.x && this.x < paddle.x + paddle.w) {
     // Check if the ball overlaps the paddle on y axis
     if (this.y + this.size > paddle.y && this.y < paddle.y + paddle.h) {
       if(this.active==true){
         this.active=false;
-        paddle.h = paddle.h-20;
-        console.log(paddle.h);
+        if(paddle.h-40<0){
+          gameOver=true;
+          winner=self;
+          endGame();
+        }else{
+          paddle.h = paddle.h-40;
+        }
+        var that = this;
+        setTimeout(function(){
+          that.active=true;
+          that.x=width/2;
+          that.y=height/2;
+          dramaticSoundActive=true;
+        },10000);
       }
-      this.size =0;
-      this.vx=0;
-      this.vy=0;
     }
   }
 }

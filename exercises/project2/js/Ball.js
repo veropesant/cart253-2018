@@ -45,10 +45,10 @@ Ball.prototype.isOffScreen = function () {
 
     if(this.x + this.size < 0){
       rightPaddleScore=rightPaddleScore+1;
-      console.log('right: '+rightPaddleScore);
+      // console.log('right: '+rightPaddleScore);
     }else if(this.x > width){
       leftPaddleScore=leftPaddleScore+1;
-      console.log('left: '+leftPaddleScore);
+      // console.log('left: '+leftPaddleScore);
     }
     return true;
   }
@@ -78,6 +78,7 @@ Ball.prototype.handleCollision = function(paddle) {
       // If so, move ball back to previous position (by subtracting current velocity)
       this.x -= this.vx;
       this.y -= this.vy;
+      popSound.play();
       // Reverse x velocity to bounce
       this.vx = -this.vx;
     }

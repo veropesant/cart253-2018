@@ -59,7 +59,7 @@ Paddle.prototype.handleHealth = function(paddle) {
       }else{
         that.color='#022D41';
       }
-    }, 2000);
+    }, 3000);
   }
 }
 

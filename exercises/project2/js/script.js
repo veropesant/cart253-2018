@@ -17,7 +17,7 @@ var rightPaddle;
 var rightPaddleScore=0;
 var leftPaddleScore=0;
 var gameOver=true;
-var maxScore=10;
+var maxScore=20;
 var startPanel;
 var endPanel;
 var startPanelActive = false;
@@ -32,11 +32,28 @@ var nbLeftProjectile = 10;
 var updateText = '';
 var updateTextX = 0;
 var updateTextY = 0;
+var popSound;
+var dramaticSound;
+var dramaticSoundActive=true;
+var pewSound;
+var healthImage;
+
+//preload()
+//
+//Preload the sounds and images needed in the game;
+function preload(){
+  //preload the sounds and music
+  popSound = new Audio('assets/sounds/pop.mp3');
+  dramaticSound = new Audio('assets/sounds/dun_dun.mp3');
+  pewSound = new Audio('assets/sounds/pew.mp3');
+  healthImage = loadImage('assets/images/health.png');
+}
 
 // setup()
 //
 // Creates the ball and paddles
 function setup() {
+
     createCanvas(640,480);
     // Create a ball
     ball = new Ball(width/2,height/2,5,5,15,5);
@@ -52,6 +69,7 @@ function setup() {
 
     startPanel = new Panel('start','Press','ENTER','to start', 'PONG GAME');
     endPanel = new Panel('end','Press','ENTER','to restart', 'GAME OVER');
+
 }
 
 // draw()
@@ -71,6 +89,7 @@ function draw() {
         text(rightPaddleScore, width/1.37, height/1.55);
         rect(width/2, 0, 5, height);
         pop();
+
         leftPaddle.handleHealth('left');
         rightPaddle.handleHealth('right');
 
@@ -98,7 +117,6 @@ function draw() {
             rightProjectile[i].display();
             rightProjectile[i].update();
             if(rightProjectile[i].isHurting===true){
-              console.log('before: '+rightProjectile[i].isHurting);
               rightProjectile[i].handleCollision(leftPaddle, rightPaddle);
             }
           }
@@ -108,7 +126,6 @@ function draw() {
             leftProjectile[i].display();
             leftProjectile[i].update();
             if(leftProjectile[i].isHurting===true){
-              console.log('before: '+leftProjectile[i].isHurting);
               leftProjectile[i].handleCollision(rightPaddle, leftPaddle);
             }
 
@@ -127,10 +144,20 @@ function draw() {
 
     //If more than 4 points have been scored in total, the mean ball appears
     if((leftPaddleScore+rightPaddleScore)>=2){
-      meanBall.display();
-      meanBall.update();
-      meanBall.handleCollision(leftPaddle);
-      meanBall.handleCollision(rightPaddle);
+
+      if(meanBall.active==true){
+        if(dramaticSoundActive==true){
+          dramaticSound.play();
+        }
+        meanBall.display();
+        meanBall.update();
+        meanBall.handleCollision(leftPaddle, 'right');
+        meanBall.handleCollision(rightPaddle, 'left');
+      }
+      setTimeout(function(){
+        dramaticSoundActive=false;
+      },2000);
+
     }
 
 }
@@ -161,6 +188,8 @@ function endGame(){
     meanBall.size=0;
     meanBall.vx=0;
     meanBall.vy=0;
+    meanBall.active=false;
+    dramaticSoundActive=false;
     endPanelActive = true;
 }
 
@@ -182,7 +211,7 @@ function reset(){
     rightPaddle.health=3;
 
     //reset mean ball
-    meanBall.size = 15;
+    meanBall.size = 20;
     meanBall.vx = 5;
     meanBall.vy = 5;
     meanBall.x = width/2;
@@ -223,7 +252,10 @@ function keyPressed(){
       if(keyCode===rightPaddle.shootKey){
         if(nbRightProjectile>0){
           rightProjectileActive=true;
+          pewSound.currentTime=0;
+          pewSound.play();
           rightProjectile.push(new Projectile(rightPaddle.x-10, rightPaddle.y+rightPaddle.h/2-5,10,-5,0,5,rightPaddle.color,true));
+          pewSound.play();
           nbRightProjectile--;
         }
 
@@ -232,6 +264,8 @@ function keyPressed(){
       else if(keyCode===leftPaddle.shootKey){
         if(nbLeftProjectile>0){
           leftProjectileActive=true;
+          pewSound.currentTime=0;
+          pewSound.play();
           leftProjectile.push(new Projectile(leftPaddle.x+10, leftPaddle.y+leftPaddle.h/2-5,10,5,0,5,leftPaddle.color,true));
           nbLeftProjectile--;
         }

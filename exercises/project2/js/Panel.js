@@ -46,6 +46,7 @@ Panel.prototype.display = function(){
     pop();
     push();
     fill('#022D41');
+    textSize(15);
     text(this.text1, width/2, height/1.56);
     text(this.text3, width/2, height/1.27);
     pop();
@@ -60,7 +61,26 @@ Panel.prototype.display = function(){
     pop();
     push();
     fill('#022D41');
-    text(winner +' side wins! \n '+ leftPaddleScore + ' | '+rightPaddleScore+'\n'+this.text , (width/2), height/2);
+    textSize(15);
+    text(winner +' side wins! \n '+ leftPaddleScore + ' | '+rightPaddleScore, width/2, height/2);
+    pop();
+    push();
+    fill('#FE424D');
+    noStroke();
+    rectMode(CENTER);
+    rect(width/2, height/1.42, 150, 50, 20);
+    pop();
+    push();
+    fill('white');
+    textSize(30);
+    textFont('Monoton');
+    text(this.text2, width/2, height/1.37);
+    pop();
+    push();
+    fill('#022D41');
+    textSize(15);
+    text(this.text1, width/2, height/1.56);
+    text(this.text3, width/2, height/1.27);
     pop();
   }
 
