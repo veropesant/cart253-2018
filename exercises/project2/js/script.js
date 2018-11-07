@@ -17,15 +17,19 @@ var meanBall;
 var leftPaddle;
 var rightPaddle;
 
+//base
 var gameOver=true;
 var maxScore=20;
 var winner = '';
+var maxHealth=3;
 
+//Panels
 var startPanel;
 var endPanel;
 var startPanelActive = false;
 var endPanelActive = false;
 
+//Projectiles
 var leftProjectile = [];
 var rightProjectile = [];
 var rightProjectileActive = false;
@@ -33,10 +37,12 @@ var leftProjectileActive = false;
 var nbRightProjectile = 10;
 var nbLeftProjectile = 10;
 
+//update text for health
 var updateText = '';
 var updateTextX = 0;
 var updateTextY = 0;
 
+//sounds
 var popSound;
 var dramaticSound;
 var dramaticSoundActive=true;
@@ -59,7 +65,7 @@ function preload(){
   popSound = new Audio('assets/sounds/pop.mp3');
   dramaticSound = new Audio('assets/sounds/dun_dun.mp3');
   pewSound = new Audio('assets/sounds/pew.mp3');
-  boostSound = new Audio('assets/sounds/boost.mp3');
+  boostSound = new Audio('assets/sounds/star.mp3');
   healthImage = loadImage('assets/images/health.png');
 }
 
@@ -83,7 +89,7 @@ function setup() {
 
     startPanel = new Panel('start','Press','ENTER','to start', 'PONG GAME');
     endPanel = new Panel('end','Press','ENTER','to restart', 'GAME OVER');
-    boost = new Boost(width/2, height/2, 5, 5, 30);
+    boost = new Boost(width/2, height/2, 7, 7, 30);
 
 }
 
@@ -136,6 +142,10 @@ function draw() {
           boost.handleCollision(rightPaddle);
           boost.handleCollision(leftPaddle);
         }
+        else{
+          boostSound.pause();
+          boostSound.currentTime=0;
+        }
 
 
         if(rightProjectileActive==true){
@@ -185,8 +195,8 @@ function draw() {
         }
         meanBall.display();
         meanBall.update();
-        meanBall.handleCollision(leftPaddle, 'right');
-        meanBall.handleCollision(rightPaddle, 'left');
+        meanBall.handleCollision(leftPaddle, 'right', 'left');
+        meanBall.handleCollision(rightPaddle, 'left', 'right');
       }
       setTimeout(function(){
         dramaticSoundActive=false;
@@ -225,6 +235,10 @@ function endGame(){
     meanBall.active=false;
     dramaticSoundActive=false;
     endPanelActive = true;
+    boost.active=false;
+    boostSound.currentTime=0;
+    boostSound.pause();
+
 }
 
 function reset(){
@@ -257,6 +271,11 @@ function reset(){
     leftProjectile=[];
     nbRightProjectile=5;
     nbLeftProjectile=5;
+
+    //reset boost
+    boost.x=width/2;
+    boost.y=width/2;
+    boost.active=false;
 
     //reset score
     leftPaddle.score=0;

@@ -53,6 +53,8 @@ Boost.prototype.handleCollision = function(paddle){
     if (this.y + this.size > paddle.y && this.y < paddle.y + paddle.h) {
       if(this.active==true){
         this.active=false;
+        this.x=width/2;
+        this.y=height/2;
         paddle.health=3;
         paddle.h=100;
       }
