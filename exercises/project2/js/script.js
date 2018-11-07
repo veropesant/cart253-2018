@@ -83,7 +83,7 @@ function setup() {
 
     startPanel = new Panel('start','Press','ENTER','to start', 'PONG GAME');
     endPanel = new Panel('end','Press','ENTER','to restart', 'GAME OVER');
-    boost = new Boost(width/2, height/2, 7, 7, 30);
+    boost = new Boost(width/2, height/2, 5, 5, 30);
 
 }
 
@@ -126,7 +126,7 @@ function draw() {
         ball.display();
         leftPaddle.display();
         rightPaddle.display();
-        if(leftPaddle.h<100 && rightPaddle.h<100 && leftPaddle.health<3 && rightPaddle.health<3){
+        if(leftPaddle.h<100 && rightPaddle.h<100){
           boost.active=true;
         }
         if(boost.active==true){
