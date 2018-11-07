@@ -54,7 +54,7 @@ Projectile.prototype.handleCollision = function(enemy, self) {
       if(self.h<100){
         self.h=self.h+20;
       }
-      
+
       this.showUpdateText('-1', enemy);
       enemy.color=255;
       this.isHurting = false;
@@ -69,12 +69,12 @@ Projectile.prototype.showUpdateText = function(text, enemy){
   if(enemy.health>=0){
     updateText = text;
     if(enemy.side=='left'){
-      updateTextX = enemy.x+20;
+      updateTextX = enemy.x+40;
       setTimeout(function(){
           enemy.color='#022D41';
       },100);
     }else{
-      updateTextX = enemy.x-20;
+      updateTextX = enemy.x-40;
       setTimeout(function(){
           enemy.color='#1AA6B7';
       },100);

@@ -70,7 +70,7 @@ Ball.prototype.display = function () {
 //
 // Check if this ball overlaps the paddle passed as an argument
 // and if so reverse x velocity to bounce
-Ball.prototype.handleCollision = function(paddle) {
+Ball.prototype.handleCollision = function(paddle, side) {
   // Check if the ball overlaps the paddle on x axis
   if (this.x + this.size > paddle.x && this.x < paddle.x + paddle.w) {
     // Check if the ball overlaps the paddle on y axis
@@ -79,6 +79,12 @@ Ball.prototype.handleCollision = function(paddle) {
       this.x -= this.vx;
       this.y -= this.vy;
       popSound.play();
+      if(side=='left'){
+        this.vx=this.vx-0.01;
+      }else{
+        this.vx=this.vx+0.01;
+      }
+
       // Reverse x velocity to bounce
       this.vx = -this.vx;
     }

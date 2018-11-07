@@ -120,8 +120,8 @@ function draw() {
             ball.reset();
         }
 
-        ball.handleCollision(leftPaddle);
-        ball.handleCollision(rightPaddle);
+        ball.handleCollision(leftPaddle, 'left');
+        ball.handleCollision(rightPaddle, 'right');
 
         ball.display();
         leftPaddle.display();
@@ -157,8 +157,10 @@ function draw() {
 
           }
         }
-
+        push();
+        textSize(40);
         text(updateText, updateTextX, updateTextY);
+        pop();
         for(var i=0; i<=leftPaddle.health-1; i++){
           image(healthImage, healthLeftPositionX+i*50, healthLeftPositionY);
         }
