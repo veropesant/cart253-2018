@@ -61,7 +61,7 @@ Ball.prototype.isOffScreen = function () {
 //
 // Draw the ball as a rectangle on the screen
 Ball.prototype.display = function () {
-  fill('#FFBA21');
+  fill(yellow);
   noStroke();
   ellipse(this.x,this.y,this.size,this.size);
 }

@@ -48,17 +48,17 @@ Paddle.prototype.handleHealth = function(paddle) {
   if(this.health<1 && !this.isDead){
     this.isDead = true;
     this.speed=0;
-    this.color='#FE424D';
+    this.color=redColor;
     var that = this;
     setTimeout(function() {
       console.log('revive now');
-      that.health=3;
+      that.health=maxHealth;
       that.speed=10;
       that.isDead = false;
       if(paddle == 'right'){
-        that.color='#1AA6B7';
+        that.color=rightBlue;
       }else{
-        that.color='#022D41';
+        that.color=leftBlue;
       }
     }, 3000);
   }

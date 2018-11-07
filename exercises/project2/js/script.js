@@ -17,19 +17,26 @@ var meanBall;
 var leftPaddle;
 var rightPaddle;
 
-//base
+//base variables
 var gameOver=true;
 var maxScore=20;
 var winner = '';
 var maxHealth=3;
+var maxHeight=100;
+var yellow = '#FFBA21';
+var redColor = '#FE424D';
+var bgBlue = '#8DD6F3';
+var scoreBlue = '#9BDDF3';
+var leftBlue = '#022D41';
+var rightBlue = '#1AA6B7';
 
-//Panels
+//Panels variables
 var startPanel;
 var endPanel;
 var startPanelActive = false;
 var endPanelActive = false;
 
-//Projectiles
+//Projectiles variables
 var leftProjectile = [];
 var rightProjectile = [];
 var rightProjectileActive = false;
@@ -37,24 +44,27 @@ var leftProjectileActive = false;
 var nbRightProjectile = 10;
 var nbLeftProjectile = 10;
 
-//update text for health
+//update text for health variables
 var updateText = '';
 var updateTextX = 0;
 var updateTextY = 0;
 
-//sounds
+//sounds variables
 var popSound;
 var dramaticSound;
 var dramaticSoundActive=true;
 var pewSound;
 var boostSound;
 
+//health variables
 var healthImage;
 var healthRightPositionX=520;
 var healthRightPositionY=30;
 var healthLeftPositionX= 90;
 var healthLeftPositionY=30;
 
+
+//boost variables
 var boost;
 
 //preload()
@@ -82,10 +92,10 @@ function setup() {
     meanBall = new MeanBall(width/2, height/2, 5, 5, 20, 5, '#FE424D');
 
     // Create the right paddle with UP and DOWN as controls and left arrow as shoot key
-    rightPaddle = new Paddle(width-10,height/2-50,10,100,10,DOWN_ARROW,UP_ARROW,37,'#1AA6B7', 3, 'right');
+    rightPaddle = new Paddle(width-10,height/2-50,10,maxHeight,10,DOWN_ARROW,UP_ARROW,37, rightBlue, maxHealth, 'right');
     // Create the left paddle with W and S as controls and D as shoot key
     // Keycodes 83 and 87 are W and S respectively
-    leftPaddle = new Paddle(0,height/2-50,10,100,10,83,87,68,'#022D41', 3, 'left');
+    leftPaddle = new Paddle(0,height/2-50,10,maxHeight,10,83,87,68, leftBlue, maxHealth, 'left');
 
     startPanel = new Panel('start','Press','ENTER','to start', 'PONG GAME');
     endPanel = new Panel('end','Press','ENTER','to restart', 'GAME OVER');
@@ -98,12 +108,14 @@ function setup() {
 // Handles input, updates all the elements, checks for collisions
 // and displays everything.
 function draw() {
-    background('#8DD6F3');
+    background(bgBlue);
     textFont('Righteous');
 
+    //check is the game is started
     if(gameOver == false){
+        //displays the scores in the background
         push();
-        fill('#9BDDF3');
+        fill(scoreBlue);
         textFont('Monoton');
         textSize(200);
         text(leftPaddle.score, width/4, height/1.55);
@@ -111,6 +123,7 @@ function draw() {
         rect(width/2, 0, 5, height);
         pop();
 
+        //calls the base functions to make the different elements work
         leftPaddle.handleHealth('left');
         rightPaddle.handleHealth('right');
 
@@ -132,9 +145,12 @@ function draw() {
         ball.display();
         leftPaddle.display();
         rightPaddle.display();
+
+        //checks if both of the paddles lost height before activating the boost
         if(leftPaddle.h<100 && rightPaddle.h<100){
           boost.active=true;
         }
+        //when boost activated, calls its base functions
         if(boost.active==true){
           boostSound.play();
           boost.display();
@@ -142,12 +158,13 @@ function draw() {
           boost.handleCollision(rightPaddle);
           boost.handleCollision(leftPaddle);
         }
-        else{
+        else{//if the boost is not active, don't play the sound of the boost and set it back to the beginning
           boostSound.pause();
           boostSound.currentTime=0;
         }
 
-
+        //goes through the array of projectile created to make
+        //them appaear on the screen and handle its collision
         if(rightProjectileActive==true){
           for(var i=0; i<rightProjectile.length; i++){
             rightProjectile[i].display();
@@ -171,6 +188,8 @@ function draw() {
         textSize(40);
         text(updateText, updateTextX, updateTextY);
         pop();
+        //displays the right amount of heart on the screen
+        //depending on each paddles' health
         for(var i=0; i<=leftPaddle.health-1; i++){
           image(healthImage, healthLeftPositionX+i*50, healthLeftPositionY);
         }
@@ -179,6 +198,9 @@ function draw() {
         }
 
     }
+    //if the game has ended, dislpay the Start screen or Game Over screen
+    //depending on which one is activated
+    //to allow the player to start the game
     else if(endPanelActive==true){
         endPanel.display();
     }else{
@@ -186,7 +208,8 @@ function draw() {
         startPanelActive = true;
     }
 
-    //If more than 4 points have been scored in total, the mean ball appears
+    //If more than 4 points have been scored in total,
+    //the mean ball appears her sound plays
     if((leftPaddle.score+rightPaddle.score)>=2){
 
       if(meanBall.active==true){
@@ -198,6 +221,8 @@ function draw() {
         meanBall.handleCollision(leftPaddle, 'right', 'left');
         meanBall.handleCollision(rightPaddle, 'left', 'right');
       }
+      //make the dramatic sound deactivate after 2 seconds so
+      //that it doesn't replay indefinitely
       setTimeout(function(){
         dramaticSoundActive=false;
       },2000);
@@ -206,7 +231,8 @@ function draw() {
 
 }
 
-//< >
+//checks if any of the players reached the max score
+//if yes, the game is over
 function handleEndGame(){
     if(leftPaddle.score>=maxScore || rightPaddle.score>=maxScore){
         gameOver=true;
@@ -219,7 +245,8 @@ function handleEndGame(){
         }
     }
 }
-
+//stops everything on the screen so that the game doesn't
+//continue in the background
 function endGame(){
     ball.vx = 0;
     ball.vy = 0;
@@ -240,7 +267,8 @@ function endGame(){
     boostSound.pause();
 
 }
-
+//set all the necessary proporties back to their
+//initial state to reset the game
 function reset(){
   //reset ball
     ball.vx=5;
@@ -287,7 +315,9 @@ function reset(){
 
 }
 
+//handles the different keyboard events
 function keyPressed(){
+  //when the start panel is active, ENTER starts the game
     if(startPanelActive == true){
         if(keyCode===ENTER){
           console.log('start');
@@ -295,17 +325,20 @@ function keyPressed(){
           startPanelActive=false;
           startPanel=null;
         }
+    //when the end panel is active, ENTER resets the game
     }else if(endPanelActive == true){
         if(keyCode===ENTER){
           reset();
         }
     }
-
+    //if the game has started, those different keys are active
     if(gameOver==false){
+      //if the player on the right presses the arrow left, a projectile is created
       if(keyCode===rightPaddle.shootKey){
         if(nbRightProjectile>0){
           rightProjectileActive=true;
           pewSound.currentTime=0;
+          //pushing the projectile in the left projectile array and plays the shoot sound
           pewSound.play();
           rightProjectile.push(new Projectile(rightPaddle.x-10, rightPaddle.y+rightPaddle.h/2-5,10,-5,0,5,rightPaddle.color,true));
           pewSound.play();
@@ -314,10 +347,12 @@ function keyPressed(){
 
 
       }
+      //if the player on the left presses the D, a projectile is created
       else if(keyCode===leftPaddle.shootKey){
         if(nbLeftProjectile>0){
           leftProjectileActive=true;
           pewSound.currentTime=0;
+          //pushing the projectile in the right projectile array and plays the shoot sound
           pewSound.play();
           leftProjectile.push(new Projectile(leftPaddle.x+10, leftPaddle.y+leftPaddle.h/2-5,10,5,0,5,leftPaddle.color,true));
           nbLeftProjectile--;

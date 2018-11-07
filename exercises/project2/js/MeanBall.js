@@ -49,22 +49,26 @@ MeanBall.prototype.handleCollision = function(paddle, self, side) {
     if (this.y + this.size > paddle.y && this.y < paddle.y + paddle.h) {
       if(this.active==true){
         this.active=false;
-        paddle.color='#FE424D';
+        paddle.color=redColor;
         setTimeout(function(){
           if(side=='left'){
-            paddle.color='#022D41';
+            paddle.color=leftBlue;
           }else{
-            paddle.color='#1AA6B7';
+            paddle.color=rightBlue;
           }
 
         },100);
-
+        //checks if the result of the substraction will be smaller
+        //than 0 before doing it to avoid an error
+        //if yes, game over.
         if(paddle.h-40<0){
           paddle.score=0;
           gameOver=true;
           winner=self;
           endGame();
-        }else{
+        }
+        //of not, substract it.
+        else{
           paddle.h = paddle.h-40;
         }
         var that = this;
@@ -79,7 +83,9 @@ MeanBall.prototype.handleCollision = function(paddle, self, side) {
   }
 }
 
-
+//display()
+//
+//A function to display the meanBall
 MeanBall.prototype.display = function(){
 
     fill(this.fillColor);

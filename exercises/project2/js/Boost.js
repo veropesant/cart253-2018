@@ -55,8 +55,8 @@ Boost.prototype.handleCollision = function(paddle){
         this.active=false;
         this.x=width/2;
         this.y=height/2;
-        paddle.health=3;
-        paddle.h=100;
+        paddle.health=maxHealth;
+        paddle.h=maxHeight;
       }
     }
   }
