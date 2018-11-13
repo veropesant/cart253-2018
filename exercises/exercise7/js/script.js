@@ -36,7 +36,7 @@ function setup() {
     pixels[i] = new Particle(random(width), random(height));
   }
   slider = createSlider(0, 255, 127);
-  background(0);
+  background(255);
 }
 
 function draw(){
