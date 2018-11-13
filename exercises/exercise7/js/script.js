@@ -22,6 +22,7 @@ var capScale = 16;
 var pixels = [];
 var slider;
 var maxPixels=20;
+var play=true;
 
 // setup()
 //
@@ -41,9 +42,24 @@ function setup() {
 
 function draw(){
   capture.loadPixels();
-  for(var i=0; i<pixels.length; i++){
-    pixels[i].update();
-    pixels[i].show();
+  if(play==true){
+    for(var i=0; i<pixels.length; i++){
+      pixels[i].update();
+      pixels[i].show();
+    }
   }
 
+
+}
+
+function keyPressed(){
+  if(keyCode == ENTER){
+    if(play==true){
+      play=false;
+      console.log('paused');
+    }else{
+      play=true;
+    }
+
+  }
 }
