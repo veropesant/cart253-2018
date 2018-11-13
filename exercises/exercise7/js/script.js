@@ -21,7 +21,7 @@ var capture;
 var capScale = 16;
 var pixels = [];
 var slider;
-var maxPixels=50;
+var maxPixels=20;
 
 // setup()
 //
