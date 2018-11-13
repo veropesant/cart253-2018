@@ -42,6 +42,7 @@ function setup() {
 
 function draw(){
   capture.loadPixels();
+  //only display the particles if the play variable is active
   if(play==true){
     for(var i=0; i<pixels.length; i++){
       pixels[i].update();
@@ -53,6 +54,7 @@ function draw(){
 }
 
 function keyPressed(){
+  //if the script is playing, pause it, and vice versa
   if(keyCode == ENTER){
     if(play==true){
       play=false;
