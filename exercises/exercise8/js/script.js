@@ -11,9 +11,9 @@ pixels are bright red, and then track these pixels and create a line as
 the user moves the object around, using this same color,
 allowing the user to draw.
 
-In this first experiment, I simply try to use the webcam and spot the colors
-of the pixels, because that's something I've never worked with previously.
-
+In this second experiment, I explore the pixel array and what I can do with it,
+based on a video by The Coding Train. Eventually, I want to use the pixel array to track
+bright color pixels on the canvas and use their rgb value to draw.
 ******************/
 
 //Variables
