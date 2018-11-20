@@ -19,36 +19,50 @@ of the pixels, because that's something I've never worked with previously.
 //Variables
 var capture;
 var capScale = 16;
-var pixels = [];
-var slider;
-var maxPixels=10;
+var arrPixels = [];
 var play=true;
+var pixBri;
 
 // setup()
 //
 // Description of setup
 
 function setup() {
-  createCanvas(640,480);
+  createCanvas(640, 480);
   pixelDensity(1);
   capture = createCapture(VIDEO);
-  capture.size(width/capScale, height/capScale);
-  for(var i=0; i<maxPixels; i++){
-    pixels[i] = new Particle(random(width), random(height));
-  }
-  slider = createSlider(0, 255, 127);
-  background(255);
+  capture.size(width/capScale,height/capScale);
 }
 
 function draw(){
+  background(51);
   capture.loadPixels();
-  //only display the particles if the play variable is active
-  if(play==true){
-    for(var i=0; i<pixels.length; i++){
-      pixels[i].update();
-      pixels[i].show();
+  loadPixels();
+  // console.log(capture.pixels);
+
+  for(var y=0; y < capture.height; y++){
+    for(var x=0; x < capture.width; x++){
+        var index = (x + y * capture.width)*4;
+        //color value
+        var red = capture.pixels[index];
+        var green = capture.pixels[index+1];
+        var blue = capture.pixels[index+2];
+
+        pixBri = (red+green+blue)/3;
+
+        var rectWidth = map(pixBri, 0, 255, 0, capScale);
+
+        fill(255);
+        rectMode(CENTER);
+        rect(x*capScale, y*capScale, rectWidth, rectWidth);
+
     }
   }
+
+
+
+  // image(capture, 0, 0);
+  // capture.hide();
 
 
 }
