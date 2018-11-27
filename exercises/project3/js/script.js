@@ -28,14 +28,16 @@ var pixBri;
 // Description of setup
 
 function setup() {
+
   createCanvas(640, 480);
   pixelDensity(1);
   capture = createCapture(VIDEO);
   capture.size(width/capScale,height/capScale);
+  background(0);
 }
 
 function draw(){
-  background(51);
+
   capture.loadPixels();
   loadPixels();
   // console.log(capture.pixels);
@@ -44,6 +46,7 @@ function draw(){
   for(var y=0; y < capture.height; y++){
     for(var x=0; x < capture.width; x++){
         var index = (x + y * capture.width)*4;
+
         //color value
         var red = capture.pixels[index];
         var green = capture.pixels[index+1];
@@ -53,10 +56,9 @@ function draw(){
         console.log(pixBri);
 
         if(pixBri>200){
-          red = 255;
-          blue = 255;
-          green = 255;
-          ellipse(x*capScale, y*capScale, 10, 10);
+          noStroke();
+          fill(255);
+          rect(x*capScale, y*capScale, 10, 10);
         }
 
 
