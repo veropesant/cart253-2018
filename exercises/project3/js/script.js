@@ -100,3 +100,16 @@ function mousePressed(){
     arrColor[i].clicked();
   }
 }
+//Function to handle Keyboard events
+function keyPressed(){
+
+  //if the script is playing, pause it, and vice versa
+  if(keyCode == ENTER){
+    if(play==true){
+      play=false;
+    }else{
+      play=true;
+    }
+
+  }
+}
