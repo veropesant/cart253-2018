@@ -28,9 +28,20 @@ var arrColor = [];
 
 var inUseCol = 'white';
 
+//Images
+var playBtn;
+var pauseBtn;
+
 // setup()
 //
 // Description of setup
+
+function preload(){
+
+  imgPlay = loadImage('assets/images/play.png');
+  imgPause = loadImage('assets/images/pause.png');
+
+}
 
 function setup() {
 
@@ -39,6 +50,8 @@ function setup() {
   capture = createCapture(VIDEO);
   capture.size(width/capScale,height/capScale);
   background(0);
+
+  playBtn = new Button(imgPause, width-35, 35, 30, 30);
 
   for(var i=1; i<=colors.length; i++){
 
@@ -88,6 +101,7 @@ function draw(){
   pop();
   capture.hide();
 
+  playBtn.display();
 
 }
 
@@ -99,7 +113,20 @@ function mousePressed(){
     arrColor[i].strokeCol='black';
     arrColor[i].clicked();
   }
+
+  playBtn.clicked();
 }
+
+//Function to check if the Play button has been pressed
+function buttonClicked(){
+
+  var d = dist(mouseX, mouseY, playBtn.x, playBtn.y);
+  if(d<playBtn.width/2){
+    console.log('allo');
+
+  }
+}
+
 //Function to handle Keyboard events
 function keyPressed(){
 
