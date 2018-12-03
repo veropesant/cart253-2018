@@ -17,11 +17,11 @@ Color.prototype.display = function(){
 
   fill(this.col);
   stroke(this.strokeCol);
-  rectMode(CENTER);
+  ellipseMode(CENTER);
   push();
   fill('black');
   noStroke();
-  rect(this.x, this.y, 35, 35);
+  ellipse(this.x, this.y, 40, 40);
   pop();
   ellipse(this.x, this.y, this.size, this.size);
 

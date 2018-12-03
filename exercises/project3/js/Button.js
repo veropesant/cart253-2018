@@ -12,9 +12,7 @@ function Button(src, x, y, w, h){
 Button.prototype.display = function(){
   imageMode(CENTER);
   push();
-  rectMode(CENTER);
-  fill(0);
-  rect(this.x, this.y, this.w, this.h);
+  image(imgPlayCon,this.x, this.y, this.w+5, this.h+5);
   pop();
   image(this.src, this.x, this.y, this.w, this.h);
 }
