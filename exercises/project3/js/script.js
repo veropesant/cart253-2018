@@ -34,8 +34,13 @@ var imgPlayCon;
 var imgPause;
 var playBtn;
 var pauseBtn;
+var cameraBtn;
+
 var imgMouse;
+var imgMouseCam;
 var imgBulb;
+
+var imgCamera;
 
 //Fonts
 var mainFont;
@@ -55,8 +60,12 @@ function preload(){
   imgPlay = loadImage('assets/images/play.png');
   imgPlayCon = loadImage('assets/images/playContour.png');
   imgPause = loadImage('assets/images/pause.png');
+
   imgMouse = loadImage('assets/images/mouse.png');
+  imgMouseCam = loadImage('assets/images/mouseCam.png');
   imgBulb = loadImage('assets/images/bulb.png');
+
+  imgCamera = loadImage('assets/images/camera.png');
   mainFont = loadFont('assets/fonts/Pixellari.ttf');
 
 }
@@ -72,7 +81,8 @@ function setup() {
   }
 
 
-  playBtn = new Button(imgPause, width-35, 35, 30, 30);
+  playBtn = new Button(imgPause, width-35, 35, 30, 30, 'playPause');
+  cameraBtn = new Button(imgCamera, 35, 35, 30, 30, 'camera');
   titleScreen = new Panel('Pixel Paint', 'Press ENTER to start painting');
 
   for(var i=1; i<=colors.length; i++){
@@ -124,6 +134,7 @@ function draw(){
 
 
     playBtn.display();
+    cameraBtn.display();
   }else{
     background(0);
     titleScreen.display();

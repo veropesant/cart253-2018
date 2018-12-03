@@ -8,6 +8,7 @@ function Panel(title, instructions){
   this.instructions = instructions;
   this.lightText = 'Use a small source of light \nin a very dark room \nto paint';
   this.playText = 'Click the play/pause button \nto stop the recording';
+  this.camText = 'Click the camera button at \nany time to save your \ndrawing';
 }
 
 Panel.prototype.display = function(){
@@ -31,10 +32,18 @@ Panel.prototype.display = function(){
   text(this.instructions, width/2, height-60);
   textAlign(LEFT);
   textSize(15);
-  text(this.lightText, 40, height/2+20);
-  image(imgBulb, width/3+20, height/2, 40, 60);
-  text(this.playText, width/2+100, height/2+20);
-  image(imgMouse, width/2+40, height/2+10, 50, 60);
+
+  //Explanation text for the painting
+  text(this.lightText, 40, height/3+20);
+  image(imgBulb, width/3+20, height/3, 40, 60);
+
+  //Explanation text for the play pause button
+  text(this.playText, width/2+100, height/3+20);
+  image(imgMouse, width/2+40, height/3+10, 50, 60);
+
+  //Explanation text for the camera button
+  text(this.camText, 40, height/2+50);
+  image(imgMouseCam, width/3+20, height/2+40, 50, 60);
   pop();
 
 }

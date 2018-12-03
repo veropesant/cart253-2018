@@ -1,12 +1,13 @@
 
 
-function Button(src, x, y, w, h){
+function Button(src, x, y, w, h, type){
   this.src=src;
   this.x=x;
   this.y=y;
   this.w=w;
   this.h=h;
   this.play='play';
+  this.type=type;
 }
 
 Button.prototype.display = function(){
@@ -26,6 +27,7 @@ Button.prototype.clicked = function(){
       console.log('allo');
       this.src=imgPlay;
       play=false;
+      save();
     }else{
       this.play='play';
       this.src=imgPause;
