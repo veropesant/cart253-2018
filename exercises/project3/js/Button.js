@@ -18,20 +18,24 @@ Button.prototype.display = function(){
   image(this.src, this.x, this.y, this.w, this.h);
 }
 
+
+
 Button.prototype.clicked = function(){
   var d = dist(mouseX, mouseY, this.x, this.y);
-
   if(d < this.w/2){
-    if(this.play=='play'){
-      this.play='pause';
-      console.log('allo');
-      this.src=imgPlay;
-      play=false;
-      save();
-    }else{
-      this.play='play';
-      this.src=imgPause;
-      play=true;
+    if(this.type=='playPause'){
+      if(this.play=='play'){
+        this.play='pause';
+        this.src=imgPlay;
+        play=false;
+      }else{
+        this.play='play';
+        this.src=imgPause;
+        play=true;
+      }
+    }else if(this.type=='camera'){
+      var c = get(75, 75, 650, 450);
+      save(c);
     }
   }
 

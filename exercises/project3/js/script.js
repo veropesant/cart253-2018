@@ -51,6 +51,7 @@ var titleScreen;
 //Game state
 var gameStarted=false;
 
+
 // setup()
 //
 // Description of setup
@@ -72,7 +73,7 @@ function preload(){
 
 function setup() {
 
-  createCanvas(640, 480);
+  createCanvas(800, 600);
   pixelDensity(1);
   capture = createCapture(VIDEO);
   capture.size(width/capScale,height/capScale);
@@ -114,11 +115,12 @@ function draw(){
             var blue = capture.pixels[index+2];
 
             pixBri = (red+green+blue)/3;
-
-            if(pixBri>200){
-              noStroke();
-              fill(inUseCol);
-              rect(x*capScale, y*capScale, 20, 20);
+            if(y*capScale>75 && y*capScale<height-90 && x*capScale>75 && x*capScale<width-80){
+              if(pixBri>200){
+                noStroke();
+                fill(inUseCol);
+                rect(x*capScale, y*capScale, 20, 20);
+              }
             }
 
 
@@ -132,9 +134,15 @@ function draw(){
     // image(capture, -20, 20);
     pop();
 
-
+    push();
+    rectMode(CENTER);
+    noFill();
+    stroke('white');
+    rect(width/2, height/2, 650, 450);
+    pop();
     playBtn.display();
     cameraBtn.display();
+
   }else{
     background(0);
     titleScreen.display();
@@ -153,6 +161,7 @@ function mousePressed(){
   }
 
   playBtn.clicked();
+  cameraBtn.clicked();
 }
 
 //Function to check if the Play button has been pressed
