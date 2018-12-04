@@ -164,15 +164,6 @@ function mousePressed(){
   cameraBtn.clicked();
 }
 
-//Function to check if the Play button has been pressed
-function buttonClicked(){
-
-  var d = dist(mouseX, mouseY, playBtn.x, playBtn.y);
-  if(d<playBtn.width/2){
-    console.log('allo');
-
-  }
-}
 
 //Function to handle Keyboard events
 function keyPressed(){

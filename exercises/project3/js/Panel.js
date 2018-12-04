@@ -23,7 +23,7 @@ Panel.prototype.display = function(){
     }
     var col = String(colors[iCol]);
     fill(col);
-    text(this.title[i], 70+i*50, 80);
+    text(this.title[i], 150+i*50, 80);
   }
   // text(this.title, width/2, height/2);
   push();
@@ -34,16 +34,16 @@ Panel.prototype.display = function(){
   textSize(15);
 
   //Explanation text for the painting
-  text(this.lightText, 40, height/3+20);
-  image(imgBulb, width/3+20, height/3, 40, 60);
+  text(this.lightText, 90, height/3+20);
+  image(imgBulb, width/3+60, height/3, 40, 60);
 
   //Explanation text for the play pause button
-  text(this.playText, width/2+100, height/3+20);
-  image(imgMouse, width/2+40, height/3+10, 50, 60);
+  text(this.playText, width/2+120, height/3+20);
+  image(imgMouse, width/2+30, height/3+10, 50, 60);
 
   //Explanation text for the camera button
-  text(this.camText, 40, height/2+50);
-  image(imgMouseCam, width/3+20, height/2+40, 50, 60);
+  text(this.camText, 90, height/2+50);
+  image(imgMouseCam, width/3+60, height/2+40, 50, 60);
   pop();
 
 }
