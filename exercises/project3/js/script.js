@@ -3,17 +3,20 @@
 Experiment with camera
 Véronique Pesant
 
-Eventually my goal is to create a drawing tool using the webcam.
-It would preferably be used in front of a white background to make the
-colors pop out more.
-I would like to scan the pixels on the webcam and spot for example which
-pixels are bright red, and then track these pixels and create a line as
-the user moves the object around, using this same color,
-allowing the user to draw.
+In the end, I created an abstract painting tool that uses the camera and light.
+Using a bright light in a dark room, the player is able to create patterns
+on the canvas.
+There's a possibility to stop the recording of the camera to create effects in
+the painting, or simply because you are satisfied with the result and don't want
+to ruin it.
 
-In this second experiment, I explore the pixel array and what I can do with it,
-based on a video by The Coding Train. Eventually, I want to use the pixel array to track
-bright color pixels on the canvas and use their rgb value to draw.
+You can also choose bewtween a variety of colors to draw with.
+
+And finally, you can take a screenshot of your work with the camera button and
+it's going to download on your computer.
+
+I'm quite proud of my project! Even though there's so many things I could still
+add to make it more interesting...but still! Pretty nice to play with :)
 ******************/
 
 //Variables
@@ -52,9 +55,9 @@ var titleScreen;
 var gameStarted=false;
 
 
-// setup()
+// preload()
 //
-// Description of setup
+// Loads the necessary images and font
 
 function preload(){
 
@@ -67,25 +70,34 @@ function preload(){
   imgBulb = loadImage('assets/images/bulb.png');
 
   imgCamera = loadImage('assets/images/camera.png');
+
   mainFont = loadFont('assets/fonts/Pixellari.ttf');
 
 }
 
+
+// setup()
+//
+// Creates the canvas and the main elements to go on it.
 function setup() {
 
   createCanvas(800, 600);
   pixelDensity(1);
   capture = createCapture(VIDEO);
   capture.size(width/capScale,height/capScale);
+
+  //if the game is started, we don't want the background to draw on each
+  //frame so we put it in the setup function instead of the draw
   if(gameStarted==true){
       background(0);
   }
 
-
+  //creating the main buttons
   playBtn = new Button(imgPause, width-35, 35, 30, 30, 'playPause');
   cameraBtn = new Button(imgCamera, 35, 35, 30, 30, 'camera');
   titleScreen = new Panel('Pixel Paint', 'Press ENTER to start painting');
 
+  //a foor loop to fill the array that contains the color palette
   for(var i=1; i<=colors.length; i++){
 
     arrColor.push(new Color((width/8)*i, height-30, 30, String(colors[i-1])));
@@ -96,14 +108,23 @@ function setup() {
 
 function draw(){
 
+  //loading the pixels of the webcam
   capture.loadPixels();
   loadPixels();
 
+//verifies that the game is started to draw the "in-game" elements
   if(gameStarted == true){
+
+    // display the color palette previously set up
     for(var i=0; i<arrColor.length; i++){
       arrColor[i].display();
       arrColor[i].handleHover();
     }
+
+    //if play equals true, then the bright
+    //pixels detected by the camera will be displayed as paint
+    //but if play equals false (the player pressed pause), then
+    //the capture stops and the pixels are not painted
     if(play==true){
       for(var y=0; y < capture.height; y++){
         for(var x=0; x < capture.width; x++){
@@ -128,6 +149,8 @@ function draw(){
       }
 
     }
+    //mirroring the camera image because for some reason,
+    //the drawing and the actual capture were mirrored.
     push();
     translate(capture.width, 0);
     scale(-1.0,1.0);
@@ -137,16 +160,21 @@ function draw(){
     push();
     rectMode(CENTER);
     noFill();
+    //stroke on the area where the player draws
     stroke('white');
     rect(width/2, height/2, 650, 450);
     pop();
+
+    //displaying the play/pause and screenshot
     playBtn.display();
     cameraBtn.display();
 
-  }else{
+  }else{ //if the game is not started, the title screen is displayed
     background(0);
     titleScreen.display();
   }
+
+  //hiding the camera image
   capture.hide();
 
 }
@@ -168,7 +196,8 @@ function mousePressed(){
 //Function to handle Keyboard events
 function keyPressed(){
 
-  //if the script is playing, pause it, and vice versa
+  //When the title screen is displayed,
+  //press ENTER to start drawing.
   if(keyCode == ENTER){
     gameStarted=true;
     background(0);
