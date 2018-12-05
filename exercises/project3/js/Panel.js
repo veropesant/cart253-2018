@@ -6,26 +6,35 @@
 function Panel(title, instructions){
   this.title = title;
   this.instructions = instructions;
+  //Different texts to display the isntructions on the title screen
   this.lightText = 'Use a small source of light \nin a very dark room \nto paint';
   this.playText = 'Click the play/pause button \nto stop the recording';
   this.camText = 'Click the camera button at \nany time to save your \ndrawing';
 }
 
+//Function to display the elements on the title screen
 Panel.prototype.display = function(){
+  //sets the styles for the main title
   textFont(mainFont);
   textSize(80);
   textAlign(CENTER);
+  //Display each letter of the title separately and give them
+  //the colors of the colors array declared in the script
   for(var i=0; i<this.title.length; i++){
     textAlign(CENTER);
     var iCol=i;
+    //if the counter of colors is bigger than the array length
+    //set it back to zero to use the array's first color and second, etc.
     if(iCol>colors.length){
       iCol = i-colors.length;
     }
+    //sets the variable for the fill
     var col = String(colors[iCol]);
     fill(col);
     text(this.title[i], 150+i*50, 80);
   }
-  // text(this.title, width/2, height/2);
+
+  //sets different styles for the instruction texts
   push();
   fill(255);
   textSize(20);

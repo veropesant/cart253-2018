@@ -12,7 +12,7 @@ function Color(x, y, size, col){
   this.click=false;
 }
 
-
+//Display each color one after the other
 Color.prototype.display = function(){
 
   fill(this.col);
@@ -27,6 +27,7 @@ Color.prototype.display = function(){
 
 }
 
+//function to create a scale up effect when the mouse is over one of the color button
 Color.prototype.handleHover = function(){
 
   var d = dist(mouseX, mouseY, this.x, this.y);
@@ -34,6 +35,8 @@ Color.prototype.handleHover = function(){
     this.size = 35;
   }else{
     if(this.click==false){
+      //put the size back to normal when the mouse is gone
+      //and if the button was not clicked
       this.size = 30;
     }
 
@@ -41,10 +44,13 @@ Color.prototype.handleHover = function(){
 
 }
 
+//function to handle the click event on the color buttons
 Color.prototype.clicked = function(){
-
+  //get the distance between the mouse and the clicked button
   var d = dist(mouseX, mouseY, this.x, this.y);
 
+  //if the mouse touches the button, changes the styles
+  //Adds a white stroke and augment the size
   if(d<this.size/2){
     this.click=true;
     this.size=35;
